@@ -17,13 +17,13 @@
 <body class="template-{{ template.name }}">
   <a class="skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
 
-  {% section 'header' %}
+  {% render 'header' %}
 
   <main id="MainContent" class="main-content" tabindex="-1">
     {{ content_for_layout }}
   </main>
 
-  {% section 'footer' %}
+  {% render 'footer' %}
 
   {% render 'cart-drawer' %}
   {% render 'size-guide-modal' %}

@@ -18,6 +18,22 @@
   };
 
   const qs = (selector, scope = document) => scope.querySelector(selector);
+
+  const menuToggle = qs('.menu-toggle');
+  const primaryNav = qs('#PrimaryNavigation');
+  if (menuToggle && primaryNav) {
+    menuToggle.addEventListener('click', () => {
+      const open = primaryNav.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+
+    primaryNav.addEventListener('click', (event) => {
+      if (event.target.closest('a')) {
+        primaryNav.classList.remove('is-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
   const qsa = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
 
   const openCart = () => {

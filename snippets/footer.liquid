@@ -1,0 +1,51 @@
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo-text">{{ shop.name }}</a>
+      <p>{{ settings.tagline }}</p>
+      <p>{{ settings.location }}</p>
+      <div class="social-links">
+        <a href="{{ settings.instagram_url }}" target="_blank" rel="noreferrer">Instagram</a>
+        <a href="{{ settings.telegram_url }}" target="_blank" rel="noreferrer">Telegram</a>
+      </div>
+    </div>
+
+    <div>
+      <h3>{{ settings.footer_column_1_title }}</h3>
+      <ul>
+        {%- assign links = settings.footer_column_1_links | split: newline -%}
+        {%- for link in links -%}
+          {%- if link != blank -%}
+            <li><a href="/collections/{{ link | handle }}">{{ link }}</a></li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    <div>
+      <h3>{{ settings.footer_column_2_title }}</h3>
+      <ul>
+        <li><a href="/pages/about">{{ 'sections.footer.about' | t }}</a></li>
+        <li><a href="/pages/contact">{{ 'sections.footer.contact' | t }}</a></li>
+        <li><a href="/pages/shipping-returns">{{ 'sections.footer.shipping_returns' | t }}</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-newsletter">
+      <h3>{{ 'sections.footer.newsletter' | t }}</h3>
+      <p>{{ 'sections.footer.newsletter_text' | t }}</p>
+      <form class="newsletter-form" action="/contact#newsletter" method="post">
+        <input type="hidden" name="form_type" value="customer">
+        <input type="hidden" name="utf8" value="✓">
+        <label class="sr-only" for="NewsletterEmail">{{ 'sections.footer.email' | t }}</label>
+        <input id="NewsletterEmail" name="contact[email]" type="email" placeholder="{{ 'sections.footer.email_placeholder' | t }}" required>
+        <button class="button button--gold" type="submit">{{ 'sections.footer.subscribe' | t }}</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'sections.footer.copyright' | t }}</p>
+    <p>{{ 'sections.footer.secure_checkout' | t }}</p>
+  </div>
+</footer>
