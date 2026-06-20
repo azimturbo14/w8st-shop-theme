@@ -5,6 +5,35 @@
     minimumFractionDigits: 0
   });
 
+  const strings = {
+    cartEmpty: {{ 'cart.drawer.empty' | t | json }},
+    selectVariant: {{ 'sections.product.select_variant' | t | json }},
+    addToCart: {{ 'sections.product.add_to_cart' | t | json }},
+    adding: {{ 'sections.product.adding' | t | json }},
+    added: {{ 'sections.product.added' | t | json }},
+    addedToCart: {{ 'sections.product.added_to_cart' | t | json }},
+    addError: {{ 'sections.product.add_error' | t | json }},
+    quickAdd: {{ 'sections.product_card.quick_add' | t | json }},
+    product: {{ 'sections.product.product' | t | json }},
+    unavailable: {{ 'sections.product.unavailable' | t | json }}
+  };
+
+  const state = {
+    cart: null,
+    cartBusy: false,
+    freeShippingThreshold: Number('{{ settings.free_shipping_threshold }}') || 500000
+  };
+
+  const qs = (selector, scope = document) => scope.querySelector(selector);
+  const qsa = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+
+  const escapeHtml = (value = '') => String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+
   const formatMoney = (cents) => {
     if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
       return Shopify.formatMoney(cents, window.shopMoneyFormat || '{{ money }}');
@@ -12,22 +41,21 @@
     return moneyFormatter.format(cents / 100);
   };
 
-  const state = {
-    cart: null,
-    freeShippingThreshold: Number('{{ settings.free_shipping_threshold }}') || 500000
+  const updateBodyScroll = () => {
+    const anyOpen = qs('#CartDrawer.is-open') || qs('.modal.is-open');
+    document.body.style.overflow = anyOpen ? 'hidden' : '';
   };
-
-  const qs = (selector, scope = document) => scope.querySelector(selector);
 
   const menuToggle = qs('.menu-toggle');
   const primaryNav = qs('#PrimaryNavigation');
-  const closeMenuButton = qs('[data-close-menu]');
+
   const closeMenu = () => {
     if (!primaryNav || !menuToggle) return;
     primaryNav.classList.remove('is-open');
     menuToggle.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
+    updateBodyScroll();
   };
+
   if (menuToggle && primaryNav) {
     menuToggle.addEventListener('click', () => {
       const open = primaryNav.classList.toggle('is-open');
@@ -41,10 +69,10 @@
       }
     });
   }
-  if (closeMenuButton) {
-    closeMenuButton.addEventListener('click', closeMenu);
-  }
-  const qsa = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+
+  qsa('[data-close-menu]').forEach((button) => {
+    button.addEventListener('click', closeMenu);
+  });
 
   const normalizeCategory = (value) => String(value || '')
     .toLowerCase()
@@ -58,6 +86,7 @@
       backpacks: ['backpack', 'bag', 'bags'],
       clothes: ['clothing', 'apparel', 'clothes', 'shirt', 'hoodie', 'pants'],
       sportwear: ['sportswear', 'sport', 'sports', 'gym', 'training', 'active'],
+      sportswear: ['sportswear', 'sport', 'sports', 'gym', 'training', 'active'],
       streetwear: ['street', 'urban', 'streetwear']
     };
     const wanted = [filter, ...(aliases[filter] || [])].map(normalizeCategory);
@@ -99,7 +128,7 @@
     if (!drawer) return;
     drawer.classList.remove('is-open');
     drawer.setAttribute('aria-hidden', 'true');
-    if (!qs('.modal.is-open')) document.body.style.overflow = '';
+    updateBodyScroll();
   };
 
   const fetchCart = async () => {
@@ -118,26 +147,25 @@
       node.textContent = cart.item_count;
     });
 
-    const subtotalNodes = qsa('[data-cart-subtotal]');
-    subtotalNodes.forEach((node) => {
+    qsa('[data-cart-subtotal]').forEach((node) => {
       node.textContent = formatMoney(cart.total_price);
     });
 
     const drawerItems = qs('[data-cart-items]');
     if (drawerItems) {
       if (cart.item_count === 0) {
-        drawerItems.innerHTML = `<p class="empty-cart-note">${'{{ 'cart.drawer.empty' | t }}'}</p>`;
+        drawerItems.innerHTML = `<p class="empty-cart-note">${escapeHtml(strings.cartEmpty)}</p>`;
       } else {
         drawerItems.innerHTML = cart.items.map((item) => `
-          <article class="cart-drawer__item" data-drawer-line="${item.key}">
-            ${item.image ? `<img src="${item.image}" width="76" height="92" alt="${item.title}">` : `<span>W8ST</span>`}
+          <article class="cart-drawer__item" data-drawer-line="${escapeHtml(item.key)}">
+            ${item.image ? `<img src="${escapeHtml(item.image)}" width="76" height="92" alt="${escapeHtml(item.product_title)}">` : `<span>W8ST</span>`}
             <div>
-              <h3>${item.product_title}</h3>
-              <p>${item.variant_title || ''} · ${formatMoney(item.final_line_price)}</p>
+              <h3>${escapeHtml(item.product_title)}</h3>
+              <p>${escapeHtml(item.variant_title || '')} · ${formatMoney(item.final_line_price)}</p>
               <div class="cart-drawer__item__controls">
-                <button type="button" data-drawer-qty="${item.key}" data-qty="-1" aria-label="Decrease quantity">−</button>
+                <button type="button" data-drawer-qty="${escapeHtml(item.key)}" data-qty="-1" aria-label="Decrease quantity">−</button>
                 <span>${item.quantity}</span>
-                <button type="button" data-drawer-qty="${item.key}" data-qty="1" aria-label="Increase quantity">+</button>
+                <button type="button" data-drawer-qty="${escapeHtml(item.key)}" data-qty="1" aria-label="Increase quantity">+</button>
               </div>
             </div>
           </article>
@@ -164,7 +192,7 @@
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(body)
     });
-    if (!response.ok) throw new Error(await response.text());
+    if (!response.ok) throw new Error(await response.text() || 'Cart request failed');
     return response.json();
   };
 
@@ -187,6 +215,11 @@
       || '';
   };
 
+  const getVariantMediaId = (variant) => {
+    if (!variant) return '';
+    return String(variant.featured_media?.id || variant.image?.id || '');
+  };
+
   const getSelectedVariant = (form) => {
     const variantJson = form.dataset.variantJson ? JSON.parse(form.dataset.variantJson) : [];
     if (!variantJson.length) return null;
@@ -202,26 +235,51 @@
     )) || null;
   };
 
-  const updateVariantImage = (form) => {
-    const mainImage = qs('#MainProductImage');
-    if (!mainImage) return;
-    const checkedOption = form.querySelector('input[name^="options["]:checked');
-    const label = checkedOption ? document.querySelector(`label[for="${checkedOption.id}"]`) : null;
-    const image = label?.dataset.optionImage || getVariantImage(getSelectedVariant(form));
-    if (!image) return;
-    mainImage.src = image;
-    mainImage.dataset.zoomSrc = label?.dataset.optionZoom || image;
-    qsa('[data-product-media]').forEach((button) => {
-      const active = button.dataset.src === image || button.dataset.zoomSrc === image;
-      button.classList.toggle('is-active', active);
-    });
-  };
-
   const updateVariantId = (form) => {
     const variant = getSelectedVariant(form);
     const input = form.querySelector('input[name="id"]');
     if (input && variant?.id) input.value = variant.id;
     return variant?.id;
+  };
+
+  const updateButtonState = (form) => {
+    const variant = getSelectedVariant(form);
+    const input = form.querySelector('input[name="id"]');
+    const button = qs('button[type="submit"]', form);
+    if (input && variant?.id) input.value = variant.id;
+
+    if (!button) return;
+    const unavailable = !variant || !variant.available;
+    button.disabled = unavailable;
+    button.textContent = unavailable ? strings.unavailable : strings.addToCart;
+  };
+
+  const updateVariantImage = (form, event) => {
+    const mainImage = qs('#MainProductImage');
+    if (!mainImage) return;
+
+    const selectedVariant = getSelectedVariant(form);
+    let image = '';
+    let mediaId = '';
+
+    if (event?.target?.matches?.('input[name^="options["]')) {
+      const label = document.querySelector(`label[for="${event.target.id}"]`);
+      image = label?.dataset.optionImage || '';
+      mediaId = label?.dataset.mediaId || '';
+    }
+
+    if (!image) {
+      image = getVariantImage(selectedVariant);
+      mediaId = getVariantMediaId(selectedVariant);
+    }
+
+    if (!image) return;
+    mainImage.src = image;
+    mainImage.dataset.zoomSrc = image;
+    qsa('[data-product-media]').forEach((button) => {
+      const active = mediaId ? String(button.dataset.mediaId) === String(mediaId) : button.dataset.src === image;
+      button.classList.toggle('is-active', active);
+    });
   };
 
   qsa('[data-open-cart]').forEach((button) => {
@@ -245,99 +303,111 @@
       const button = qs('button[type="submit"]', form);
       const status = qs('[data-product-status]', form);
       const originalText = button?.textContent;
-      const variant = getSelectedVariant(form);
-      const variantId = variant?.id;
+      const selectedVariant = getSelectedVariant(form);
+      const hiddenInput = form.querySelector('input[name="id"]');
+      const variantId = selectedVariant?.id || Number(hiddenInput?.value);
 
       if (!variantId) {
-        if (status) status.textContent = '{{ 'sections.product.select_variant' | t }}';
+        if (status) status.textContent = strings.selectVariant;
         return;
       }
 
-      if (!variant.available) {
-        if (status) status.textContent = 'This variant is unavailable.';
+      if (selectedVariant && !selectedVariant.available) {
+        if (status) status.textContent = strings.unavailable;
         return;
       }
 
       if (button) {
         button.disabled = true;
-        button.textContent = '{{ 'sections.product.adding' | t }}';
+        button.textContent = strings.adding;
       }
 
       try {
         await cartRequest('/cart/add.js', { id: Number(variantId), quantity: 1 });
         await fetchCart();
         openCart();
-        if (status) status.textContent = '{{ 'sections.product.added' | t }}';
-        showNotification('{{ 'sections.product.added_to_cart' | t }}');
+        if (status) status.textContent = strings.added;
+        showNotification(`${button?.dataset.productTitle || strings.product} ${strings.addedToCart}`);
       } catch (error) {
         if (status) status.textContent = error.message;
-        showNotification('{{ 'sections.product.add_error' | t }}');
+        showNotification(strings.addError);
       } finally {
         if (button) {
           button.disabled = false;
-          button.textContent = originalText;
+          button.textContent = originalText || strings.adding;
         }
       }
     });
 
-    form.addEventListener('change', () => {
+    form.addEventListener('change', (event) => {
       updateVariantId(form);
-      updateVariantImage(form);
+      updateVariantImage(form, event);
+      updateButtonState(form);
     });
+
+    updateButtonState(form);
   });
 
   qsa('[data-quick-add]').forEach((button) => {
     button.addEventListener('click', async () => {
       const variantId = button.dataset.variantId;
-      if (!variantId) return;
+      if (!variantId || button.disabled) return;
       button.disabled = true;
-      button.textContent = '{{ 'sections.product.adding' | t }}';
+      button.textContent = strings.adding;
       try {
         await cartRequest('/cart/add.js', { id: Number(variantId), quantity: 1 });
         await fetchCart();
         openCart();
-        showNotification(`${button.dataset.productTitle || '{{ 'sections.product.product' | t }}'} {{ 'sections.product.added_to_cart' | t }}`);
+        showNotification(`${button.dataset.productTitle || strings.product} ${strings.addedToCart}`);
       } catch (error) {
-        showNotification('{{ 'sections.product.add_error' | t }}');
+        showNotification(error.message || strings.addError);
       } finally {
         button.disabled = false;
-        button.textContent = '{{ 'sections.product.quick_add' | t }}';
+        button.textContent = strings.quickAdd;
       }
     });
   });
 
   const changeCartQuantity = async (line, quantity) => {
+    if (state.cartBusy) return;
     if (quantity < 0) quantity = 0;
-    await cartRequest('/cart/change.js', { id: line, quantity });
-    await fetchCart();
+    state.cartBusy = true;
+    try {
+      const id = /^\d+$/.test(String(line)) ? Number(line) : line;
+      await cartRequest('/cart/change.js', { id, quantity });
+      await fetchCart();
+    } finally {
+      state.cartBusy = false;
+    }
   };
 
-  qsa('[data-cart-qty]').forEach((button) => {
-    button.addEventListener('click', async () => {
-      const line = button.dataset.line;
+  document.addEventListener('click', async (event) => {
+    const cartButton = event.target.closest('[data-cart-qty]');
+    if (cartButton) {
+      const line = cartButton.dataset.line;
       const input = qs(`[data-cart-line="${line}"]`);
-      const delta = Number(button.dataset.qty);
+      const delta = Number(cartButton.dataset.qty);
       if (!input) return;
       const next = Math.max(Number(input.value || 0) + delta, 0);
       input.value = next;
       await changeCartQuantity(line, next);
-    });
-  });
+      return;
+    }
 
-  qsa('[data-remove-line]').forEach((link) => {
-    link.addEventListener('click', async (event) => {
+    const removeLink = event.target.closest('[data-remove-line]');
+    if (removeLink) {
       event.preventDefault();
-      await changeCartQuantity(link.dataset.line, 0);
-    });
-  });
+      await changeCartQuantity(removeLink.dataset.line, 0);
+      return;
+    }
 
-  qsa('[data-drawer-qty]').forEach((button) => {
-    button.addEventListener('click', async () => {
-      const key = button.dataset.drawerQty;
+    const drawerButton = event.target.closest('[data-drawer-qty]');
+    if (drawerButton) {
+      const key = drawerButton.dataset.drawerQty;
       const item = state.cart?.items?.find((cartItem) => String(cartItem.key) === String(key));
       if (!item) return;
-      await changeCartQuantity(item.key, item.quantity + Number(button.dataset.qty));
-    });
+      await changeCartQuantity(item.key, item.quantity + Number(drawerButton.dataset.qty));
+    }
   });
 
   const mainImage = qs('#MainProductImage');
@@ -371,15 +441,17 @@
   });
 
   const openModal = (modal) => {
+    if (!modal) return;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   };
 
   function closeModal(modal) {
+    if (!modal) return;
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
-    if (!qs('.cart-drawer.is-open')) document.body.style.overflow = '';
+    updateBodyScroll();
   }
 
   qsa('[data-open-size-guide]').forEach((button) => {
@@ -394,7 +466,47 @@
     trigger.addEventListener('click', () => {
       const expanded = trigger.getAttribute('aria-expanded') === 'true';
       trigger.setAttribute('aria-expanded', String(!expanded));
+      const icon = trigger.querySelector('[aria-hidden="true"]');
+      if (icon) icon.textContent = expanded ? '+' : '−';
     });
+  });
+
+  const renderRecommendations = (container, products) => {
+    if (!products.length) {
+      container.innerHTML = `<div class="empty-state product-catalog__empty"><h2>No related products yet</h2><p>Add more products and Shopify will suggest related items here.</p></div>`;
+      return;
+    }
+
+    container.innerHTML = products.map((product) => {
+      const image = product.featured_image?.src || product.featured_media?.preview_image?.url || '';
+      return `
+        <article class="product-card" data-product-card>
+          <div class="product-card__media">
+            <a href="${escapeHtml(product.url || `/products/${product.handle}`)}">
+              ${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}" width="520" height="620" loading="lazy">` : `<div class="product-placeholder">W8ST</div>`}
+            </a>
+          </div>
+          <div class="product-card__info">
+            <h3><a href="${escapeHtml(product.url || `/products/${product.handle}`)}">${escapeHtml(product.title)}</a></h3>
+            <div class="product-card__prices">
+              ${product.compare_at_price ? `<span class="price price--compare">${formatMoney(product.compare_at_price)}</span>` : ''}
+              <span class="price">${formatMoney(product.price)}</span>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join('');
+  };
+
+  qsa('[data-product-recommendations]').forEach((container) => {
+    const productId = container.dataset.productId;
+    if (!productId) return;
+    fetch(`/recommendations/products.json?product_id=${productId}&limit=4`, { headers: { 'Accept': 'application/json' } })
+      .then((response) => response.ok ? response.json() : [])
+      .then((data) => renderRecommendations(container, data.products || []))
+      .catch(() => {
+        container.innerHTML = `<div class="empty-state product-catalog__empty"><h2>No related products yet</h2><p>More products will appear here when Shopify can recommend them.</p></div>`;
+      });
   });
 
   fetchCart().catch(() => {

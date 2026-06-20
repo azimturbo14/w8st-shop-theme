@@ -22,7 +22,6 @@
   {
     "name": "Brand",
     "settings": [
-      { "type": "image_picker", "id": "logo", "label": "Logo" },
       { "type": "text", "id": "tagline", "label": "Tagline", "default": "Wear the streets. Own the game." },
       { "type": "text", "id": "location", "label": "Location", "default": "Tashkent, Uzbekistan" }
     ]
@@ -63,8 +62,6 @@
   {
     "name": "Footer",
     "settings": [
-      { "type": "text", "id": "tagline", "label": "Tagline", "default": "Wear the streets. Own the game." },
-      { "type": "text", "id": "location", "label": "Location", "default": "Tashkent, Uzbekistan" },
       { "type": "text", "id": "footer_column_1_title", "label": "Footer column 1 title", "default": "Shop" },
       { "type": "textarea", "id": "footer_column_1_links", "label": "Footer column 1 links", "default": "All Products\nShoes\nBackpacks\nClothes" },
       { "type": "text", "id": "footer_column_2_title", "label": "Footer column 2 title", "default": "Help" },

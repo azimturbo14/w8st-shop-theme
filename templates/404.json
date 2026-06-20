@@ -1,9 +1,9 @@
 {
   "sections": {
     "main": {
-      "type": "main-page",
+      "type": "404",
       "settings": {
-        "eyebrow": "Page not found"
+        "eyebrow": "W8st Shop"
       }
     }
   },

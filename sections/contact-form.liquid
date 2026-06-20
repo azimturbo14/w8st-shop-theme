@@ -13,13 +13,13 @@
 
     <form class="contact-form" action="/contact#contact-form" method="post">
       <label for="ContactName">{{ 'sections.contact.name' | t }}</label>
-      <input id="ContactName" name="contact[name]" autocomplete="name" required>
+      <input id="ContactName" name="contact[name]" type="text" autocomplete="name" required>
 
       <label for="ContactEmail">{{ 'sections.contact.email' | t }}</label>
       <input id="ContactEmail" name="contact[email]" type="email" autocomplete="email" required>
 
       <label for="ContactPhone">{{ 'sections.contact.phone' | t }}</label>
-      <input id="ContactPhone" name="contact[phone]" autocomplete="tel">
+      <input id="ContactPhone" name="contact[phone]" type="tel" autocomplete="tel">
 
       <label for="ContactMessage">{{ 'sections.contact.message' | t }}</label>
       <textarea id="ContactMessage" name="contact[body]" rows="6" required></textarea>

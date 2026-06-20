@@ -44,6 +44,7 @@
       "added": "Ready.",
       "added_to_cart": "added to cart.",
       "select_variant": "Please choose a size.",
+      "unavailable": "This variant is unavailable.",
       "add_error": "Could not add this item. Try again.",
       "product": "Product",
       "media_gallery": "Product image gallery",

@@ -1,10 +1,10 @@
 :root {
-  --color-background: {{ settings.color_background }};
-  --color-surface: {{ settings.color_surface }};
-  --color-text: {{ settings.color_text }};
-  --color-muted: {{ settings.color_muted }};
-  --color-accent: {{ settings.color_accent }};
-  --color-accent-text: {{ settings.color_accent_text }};
+  --color-background: {{ settings.color_background | default: '#1a1208' }};
+  --color-surface: {{ settings.color_surface | default: '#f5e6c8' }};
+  --color-text: {{ settings.color_text | default: '#f5e6c8' }};
+  --color-muted: {{ settings.color_muted | default: '#c9b994' }};
+  --color-accent: {{ settings.color_accent | default: '#e8b84b' }};
+  --color-accent-text: {{ settings.color_accent_text | default: '#1a1208' }};
   --radius-sm: 12px;
   --radius-md: 18px;
   --radius-lg: 28px;
@@ -566,8 +566,8 @@ button {
 }
 
 .header-search button {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border: 0;
   background: transparent;
   color: var(--color-accent);
@@ -598,8 +598,8 @@ button {
   position: relative;
   display: inline-grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border: 1px solid rgba(245, 230, 200, 0.16);
   border-radius: 999px;
   background: rgba(245, 230, 200, 0.06);
@@ -649,15 +649,20 @@ button {
     transition: transform 0.2s ease;
     background: var(--color-background);
     border-bottom: 1px solid rgba(245, 230, 200, 0.14);
-    padding: 96px 24px 24px;
+    padding: 110px 24px 24px;
   }
 
-  .primary-nav::before {
-    content: "";
+  .primary-nav__backdrop {
+    display: none;
     position: fixed;
     inset: 0;
     z-index: -1;
     background: rgba(0, 0, 0, 0.58);
+    cursor: pointer;
+  }
+
+  .primary-nav.is-open .primary-nav__backdrop {
+    display: block;
   }
 
   .primary-nav.is-open {
@@ -687,12 +692,12 @@ button {
   }
 
   .header-search {
-    width: min(100%, 260px);
+    width: 44px;
     overflow: visible;
   }
 
   .header-search input {
-    display: block;
+    display: none;
   }
 
   .language-switcher {

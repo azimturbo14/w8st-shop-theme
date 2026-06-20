@@ -11,12 +11,8 @@
       </div>
       <div class="product-media-gallery__thumbs" aria-label="{{ 'sections.product.media_gallery' | t }}">
         {%- for media in product.media limit: 6 -%}
-          <button type="button" data-product-media data-src="{{ media.preview_image | image_url: width: 300 }}" data-zoom-src="{{ media | image_url: width: 1800 }}" aria-label="{{ media.alt | default: product.title | escape }}">
+          <button type="button" data-product-media data-media-id="{{ media.id }}" data-src="{{ media.preview_image | image_url: width: 300 }}" data-zoom-src="{{ media | image_url: width: 1800 }}" {% if forloop.first %}class="is-active"{% endif %} aria-label="{{ media.alt | default: product.title | escape }}">
             <img src="{{ media.preview_image | image_url: width: 220 }}" alt="" width="80" height="96" loading="lazy">
-          </button>
-        {%- else -%}
-          <button type="button" data-product-media aria-label="{{ product.title | escape }}">
-            <span>W8ST</span>
           </button>
         {%- endfor -%}
       </div>
@@ -39,19 +35,28 @@
         {%- unless product.has_only_default_variant -%}
           <div class="option-group">
             {%- for option in product.options_with_values -%}
+              {%- assign option_index = forloop.index0 -%}
               <fieldset>
                 <legend>{{ option.name }}</legend>
                 <div class="option-picker">
                   {%- for value in option.values -%}
-                    {%- assign input_id = 'Option-' | append: forloop.index0 | append: '-' | append: product.id -%}
+                    {%- assign input_id = 'Option-' | append: option_index | append: '-' | append: forloop.index0 | append: '-' | append: product.id -%}
                     {%- assign option_image = product.featured_media -%}
+                    {%- assign option_media_id = '' -%}
+                    {%- assign option_available = false -%}
                     {%- for variant in product.variants -%}
-                      {%- if variant.options contains value and option_image == product.featured_media -%}
-                        {%- assign option_image = variant.featured_media | default: variant.image | default: product.featured_media -%}
+                      {%- if variant.options[option_index] == value -%}
+                        {%- if variant.available -%}
+                          {%- assign option_available = true -%}
+                        {%- endif -%}
+                        {%- if option_image == product.featured_media -%}
+                          {%- assign option_image = variant.featured_media | default: variant.image | default: product.featured_media -%}
+                          {%- assign option_media_id = variant.featured_media.id | default: variant.image.id | default: product.featured_media.id -%}
+                        {%- endif -%}
                       {%- endif -%}
                     {%- endfor -%}
-                    <input type="radio" id="{{ input_id }}" name="options[{{ option.name }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
-                    <label for="{{ input_id }}" data-option-image="{{ option_image | image_url: width: 900 }}" data-option-zoom="{{ option_image | image_url: width: 1800 }}">{{ value }}</label>
+                    <input type="radio" id="{{ input_id }}" name="options[{{ option.name }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} {% unless option_available %}disabled{% endunless %}>
+                    <label for="{{ input_id }}" data-option-image="{{ option_image | image_url: width: 900 }}" data-option-zoom="{{ option_image | image_url: width: 1800 }}" data-media-id="{{ option_media_id }}" {% unless option_available %}class="is-unavailable"{% endunless %}>{{ value }}</label>
                   {%- endfor -%}
                 </div>
               </fieldset>
@@ -60,7 +65,7 @@
         {%- endunless -%}
 
         <div class="product-actions">
-          <button class="button button--gold button--large" type="submit">{{ 'sections.product.add_to_cart' | t }}</button>
+          <button class="button button--gold button--large" type="submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>{{ 'sections.product.add_to_cart' | t }}</button>
           <button class="button button--outline" type="button" data-open-size-guide>{{ settings.size_guide_title }}</button>
         </div>
         <p class="product-status" data-product-status aria-live="polite"></p>
@@ -73,8 +78,10 @@
             <span aria-hidden="true">+</span>
           </button>
           <div class="accordion__panel">
-            <p>{{ 'sections.product.shipping_text' | t }}</p>
-            <p>{{ 'sections.product.returns_text' | t }}</p>
+            <div>
+              <p>{{ 'sections.product.shipping_text' | t }}</p>
+              <p>{{ 'sections.product.returns_text' | t }}</p>
+            </div>
           </div>
         </div>
       {%- endif -%}
@@ -88,21 +95,7 @@
       <p class="eyebrow">{{ 'sections.product.related_eyebrow' | t }}</p>
       <h2>{{ 'sections.product.related_title' | t }}</h2>
     </div>
-    <div class="product-grid">
-      {%- assign related_products = collection.products | where: 'vendor', product.vendor -%}
-      {%- assign related_count = 0 -%}
-      {%- for related in related_products limit: 5 -%}
-        {%- if related.id != product.id -%}
-          {%- assign related_count = related_count | plus: 1 -%}
-          {% render 'product-card', product: related, show_button: true %}
-        {%- endif -%}
-      {%- endfor -%}
-      {%- if related_count == 0 -%}
-        {%- for i in (1..4) -%}
-          {% render 'product-card', product: null %}
-        {%- endfor -%}
-      {%- endif -%}
-    </div>
+    <div id="product-recommendations" class="product-grid" data-product-recommendations data-product-id="{{ product.id }}"></div>
   </div>
 </section>
 
@@ -269,6 +262,12 @@
   color: var(--color-accent-text);
 }
 
+.option-picker label.is-unavailable {
+  opacity: 0.45;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
 .product-actions {
   display: grid;
   grid-template-columns: 1.4fr 0.8fr;
@@ -329,6 +328,66 @@
 
 .related-products .product-card p {
   color: var(--color-muted);
+}
+
+.related-products .product-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: rgba(245, 230, 200, 0.06);
+  border: 1px solid rgba(245, 230, 200, 0.1);
+}
+
+.related-products .product-card__media {
+  position: relative;
+  aspect-ratio: 5 / 6;
+  overflow: hidden;
+  background: rgba(245, 230, 200, 0.06);
+}
+
+.related-products .product-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.related-products .product-card__info {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+}
+
+.related-products .product-card h3 {
+  margin: 0;
+  min-height: 42px;
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 1rem;
+  line-height: 1.25;
+  text-transform: uppercase;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.related-products .product-card h3 a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.related-products .product-card__prices {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--color-accent);
+  font-weight: 950;
+}
+
+.related-products .price--compare {
+  color: var(--color-muted);
+  font-weight: 700;
+  text-decoration: line-through;
 }
 
 @media (max-width: 900px) {

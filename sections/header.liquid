@@ -27,6 +27,10 @@
     </button>
 
     <nav class="primary-nav" id="PrimaryNavigation" aria-label="{{ 'sections.header.primary_navigation' | t }}">
+      <div class="primary-nav__backdrop" data-close-menu aria-hidden="true"></div>
+      <button class="primary-nav__close" type="button" data-close-menu aria-label="{{ 'general.accessibility.close' | t }}">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
       <ul>
         <li><a href="{{ settings.menu_url_1 }}">{{ settings.menu_label_1 }}</a></li>
         <li><a href="{{ settings.menu_url_2 }}">{{ settings.menu_label_2 }}</a></li>
@@ -323,23 +327,3 @@
   }
 }
 {% endstylesheet %}
-
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('#PrimaryNavigation');
-    if (!toggle || !nav) return;
-
-    toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', String(open));
-    });
-
-    nav.addEventListener('click', (event) => {
-      if (event.target.closest('a')) {
-        nav.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  });
-</script>

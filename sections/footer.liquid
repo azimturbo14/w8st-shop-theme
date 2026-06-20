@@ -13,7 +13,7 @@
     <div>
       <h3>{{ settings.footer_column_1_title }}</h3>
       <ul>
-        {%- assign links = settings.footer_column_1_links | split: newline -%}
+        {%- assign links = settings.footer_column_1_links | split: "\n" -%}
         {%- for link in links -%}
           {%- if link != blank -%}
             <li><a href="/collections/{{ link | handle }}">{{ link }}</a></li>
@@ -37,6 +37,7 @@
       <form class="newsletter-form" action="/contact#newsletter" method="post">
         <input type="hidden" name="form_type" value="customer">
         <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="contact[tags]" value="newsletter">
         <label class="sr-only" for="NewsletterEmail">{{ 'sections.footer.email' | t }}</label>
         <input id="NewsletterEmail" name="contact[email]" type="email" placeholder="{{ 'sections.footer.email_placeholder' | t }}" required>
         <button class="button button--gold" type="submit">{{ 'sections.footer.subscribe' | t }}</button>

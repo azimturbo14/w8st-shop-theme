@@ -9,8 +9,12 @@
           <div class="product-placeholder">W8ST</div>
         {%- endif -%}
       </a>
-      <button class="quick-add" type="button" data-quick-add data-variant-id="{{ product.selected_or_first_available_variant.id }}" data-product-title="{{ product.title | escape }}">
-        {{ 'sections.product_card.quick_add' | t }}
+      <button class="quick-add" type="button" data-quick-add data-variant-id="{{ product.selected_or_first_available_variant.id }}" data-product-title="{{ product.title | escape }}" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+        {%- if product.selected_or_first_available_variant.available -%}
+          {{ 'sections.product_card.quick_add' | t }}
+        {%- else -%}
+          Sold out
+        {%- endif -%}
       </button>
     </div>
 
@@ -22,9 +26,9 @@
         {%- endif -%}
         <span class="price">{{ product.price | money }}</span>
       </div>
-      <form class="product-form" data-product-form>
+      <form class="product-form" data-product-form data-variant-json='{{ product.variants | json | escape }}'>
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        <button class="button button--gold button--full" type="submit">{{ 'sections.product_card.add_to_cart' | t }}</button>
+        <button class="button button--gold button--full" type="submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>{{ 'sections.product_card.add_to_cart' | t }}</button>
       </form>
     </div>
   {%- else -%}
@@ -94,13 +98,20 @@
   text-transform: uppercase;
   transform: translateY(16px);
   opacity: 0;
+  pointer-events: none;
   transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.quick-add:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 .product-card:hover .quick-add,
 .product-card:focus-within .quick-add {
   transform: translateY(0);
   opacity: 1;
+  pointer-events: auto;
 }
 
 .product-card__info {
@@ -153,9 +164,11 @@
 @media (hover: none) {
   .quick-add {
     position: static;
+    width: calc(100% - 24px);
     margin: 0 12px 12px;
     transform: none;
     opacity: 1;
+    pointer-events: auto;
   }
 }
 {% endstylesheet %}
