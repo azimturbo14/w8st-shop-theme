@@ -1,0 +1,59 @@
+<section class="section product-section">
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.description }}</p>
+    </div>
+
+    <div class="product-grid" data-product-grid>
+      {%- if section.settings.collection.products_count > 0 -%}
+        {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product, show_button: true %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          {% render 'product-card', product: null %}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured products",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New arrivals" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Fresh drops" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Add a collection in Shopify and this section will show your real products automatically." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "min": 2, "max": 8, "step": 1, "label": "Products", "default": 4 }
+  ],
+  "presets": [{ "name": "Featured products" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.product-section {
+  background: linear-gradient(180deg, var(--color-background), #120b05);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 1080px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+{% endstylesheet %}

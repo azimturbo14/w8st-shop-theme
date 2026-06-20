@@ -1,0 +1,81 @@
+<section class="section sport-section">
+  <div class="container sport-layout">
+    <div class="sport-copy">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.description }}</p>
+      <a class="button button--gold" href="{{ section.settings.button_url }}">{{ section.settings.button_label }}</a>
+    </div>
+    <div class="product-grid product-grid--sport">
+      {%- if section.settings.collection.products_count > 0 -%}
+        {%- for product in section.settings.collection.products limit: 4 -%}
+          {% render 'product-card', product: product, show_button: true %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          {% render 'product-card', product: null %}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sport collection",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Built to move" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Sport collection" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Performance fabrics, flexible cuts, and clean silhouettes for training and everyday motion." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Shop sportswear" },
+    { "type": "url", "id": "button_url", "label": "Button URL", "default": "/collections/sportswear" }
+  ],
+  "presets": [{ "name": "Sport collection" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.sport-section {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(232, 184, 75, 0.18), transparent 28%),
+    #0f0a05;
+  color: var(--color-text);
+}
+
+.sport-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.sport-copy {
+  position: sticky;
+  top: 112px;
+  align-self: start;
+}
+
+.sport-copy h2 {
+  max-width: 420px;
+  margin: 0;
+  font-size: clamp(2.4rem, 6vw, 5.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+}
+
+.sport-copy p:not(.eyebrow) {
+  color: var(--color-muted);
+}
+
+@media (max-width: 1080px) {
+  .sport-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sport-copy {
+    position: static;
+  }
+}
+{% endstylesheet %}

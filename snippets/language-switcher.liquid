@@ -1,0 +1,13 @@
+{%- liquid
+  assign current_url = request.path | append: '?' | append: request.query_string
+  if request.query_string contains 'locale='
+    assign current_url = request.path
+  endif
+-%}
+<div class="language-switcher" aria-label="{{ 'general.language.label' | t }}">
+  <a href="{{ current_url }}?locale=en" class="{% if request.locale.iso_code == 'en' %}is-active{% endif %}" lang="en">EN</a>
+  <span aria-hidden="true">/</span>
+  <a href="{{ current_url }}?locale=uz" class="{% if request.locale.iso_code == 'uz' %}is-active{% endif %}" lang="uz">UZ</a>
+  <span aria-hidden="true">/</span>
+  <a href="{{ current_url }}?locale=ru" class="{% if request.locale.iso_code == 'ru' %}is-active{% endif %}" lang="ru">RU</a>
+</div>

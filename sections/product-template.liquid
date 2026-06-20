@@ -1,0 +1,336 @@
+<section class="section product-detail">
+  <div class="container product-detail__grid">
+    <div class="product-media-gallery" data-gallery>
+      {%- assign featured = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+      <div class="product-media-gallery__main">
+        {% if featured != blank %}
+          <img id="MainProductImage" src="{{ featured | image_url: width: 900 }}" alt="{{ featured.alt | default: product.title | escape }}" width="900" height="1080" loading="eager" data-zoom-src="{{ featured | image_url: width: 1800 }}">
+        {% else %}
+          <div class="product-placeholder">W8ST</div>
+        {% endif %}
+      </div>
+      <div class="product-media-gallery__thumbs" aria-label="{{ 'sections.product.media_gallery' | t }}">
+        {%- for media in product.media limit: 6 -%}
+          <button type="button" data-product-media data-src="{{ media.preview_image | image_url: width: 300 }}" data-zoom-src="{{ media | image_url: width: 1800 }}" aria-label="{{ media.alt | default: product.title | escape }}">
+            <img src="{{ media.preview_image | image_url: width: 220 }}" alt="" width="80" height="96" loading="lazy">
+          </button>
+        {%- else -%}
+          <button type="button" data-product-media aria-label="{{ product.title | escape }}">
+            <span>W8ST</span>
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="product-detail__info">
+      <p class="eyebrow">{{ product.vendor | default: shop.name }}</p>
+      <h1>{{ product.title }}</h1>
+      <div class="product-detail__prices">
+        <span class="price">{{ product.selected_or_first_available_variant.price | money }}</span>
+        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+          <span class="price price--compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+        {%- endif -%}
+      </div>
+      <div class="product-detail__description">{{ product.description }}</div>
+
+      <form class="product-form" data-product-form data-variant-json='{{ product.variants | json }}'>
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        {%- unless product.has_only_default_variant -%}
+          <div class="option-group">
+            {%- for option in product.options_with_values -%}
+              <fieldset>
+                <legend>{{ option.name }}</legend>
+                <div class="option-picker">
+                  {%- for value in option.values -%}
+                    {%- assign input_id = 'Option-' | append: forloop.index0 | append: '-' | append: product.id -%}
+                    <input type="radio" id="{{ input_id }}" name="options[{{ option.name }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
+                    <label for="{{ input_id }}">{{ value }}</label>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endfor -%}
+          </div>
+        {%- endunless -%}
+
+        <div class="product-actions">
+          <button class="button button--gold button--large" type="submit">{{ 'sections.product.add_to_cart' | t }}</button>
+          <button class="button button--outline" type="button" data-open-size-guide>{{ settings.size_guide_title }}</button>
+        </div>
+        <p class="product-status" data-product-status aria-live="polite"></p>
+      </form>
+
+      {%- if settings.show_shipping_accordion -%}
+        <div class="accordion product-accordion">
+          <button class="accordion__trigger" type="button" aria-expanded="false">
+            {{ 'sections.product.shipping_info' | t }}
+            <span aria-hidden="true">+</span>
+          </button>
+          <div class="accordion__panel">
+            <p>{{ 'sections.product.shipping_text' | t }}</p>
+            <p>{{ 'sections.product.returns_text' | t }}</p>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<section class="section related-products">
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">{{ 'sections.product.related_eyebrow' | t }}</p>
+      <h2>{{ 'sections.product.related_title' | t }}</h2>
+    </div>
+    <div class="product-grid">
+      {%- assign related_products = collection.products | where: 'vendor', product.vendor -%}
+      {%- assign related_count = 0 -%}
+      {%- for related in related_products limit: 5 -%}
+        {%- if related.id != product.id -%}
+          {%- assign related_count = related_count | plus: 1 -%}
+          {% render 'product-card', product: related, show_button: true %}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if related_count == 0 -%}
+        {%- for i in (1..4) -%}
+          {% render 'product-card', product: null %}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product page",
+  "settings": [],
+  "presets": [{ "name": "Product page" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.product-detail {
+  background: var(--color-background);
+}
+
+.product-detail__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.85fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: start;
+}
+
+.product-media-gallery__main {
+  position: sticky;
+  top: 96px;
+  overflow: hidden;
+  min-height: 560px;
+  border-radius: var(--radius-lg);
+  background: rgba(245, 230, 200, 0.06);
+}
+
+.product-media-gallery__main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.12s ease;
+}
+
+.product-media-gallery__thumbs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.product-media-gallery__thumbs button {
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.product-media-gallery__thumbs button.is-active {
+  border-color: var(--color-accent);
+}
+
+.product-media-gallery__thumbs img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1.2;
+  object-fit: cover;
+}
+
+.product-media-gallery__thumbs span {
+  display: grid;
+  min-height: 80px;
+  place-items: center;
+  color: rgba(232, 184, 75, 0.45);
+  font-weight: 1000;
+}
+
+.product-detail__info {
+  display: grid;
+  gap: 18px;
+}
+
+.product-detail h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+}
+
+.product-detail__prices {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  color: var(--color-accent);
+  font-size: 1.35rem;
+  font-weight: 950;
+}
+
+.price--compare {
+  color: var(--color-muted);
+  font-size: 1rem;
+  text-decoration: line-through;
+}
+
+.product-detail__description {
+  color: var(--color-muted);
+}
+
+.product-detail__description p {
+  margin: 0 0 14px;
+}
+
+.option-group {
+  display: grid;
+  gap: 14px;
+}
+
+.option-group fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.option-group legend {
+  margin-bottom: 8px;
+  font-size: 0.82rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.option-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.option-picker input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.option-picker label {
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid rgba(245, 230, 200, 0.18);
+  border-radius: 999px;
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 950;
+}
+
+.option-picker input:checked + label {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.product-actions {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 10px;
+}
+
+.product-status {
+  min-height: 22px;
+  margin: 0;
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+.accordion {
+  border-top: 1px solid rgba(245, 230, 200, 0.14);
+}
+
+.accordion__trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  padding: 18px 0;
+  font-weight: 950;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.accordion__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease;
+}
+
+.accordion__panel > div {
+  overflow: hidden;
+}
+
+.accordion__trigger[aria-expanded="true"] + .accordion__panel {
+  grid-template-rows: 1fr;
+}
+
+.accordion__panel p {
+  margin: 0 0 12px;
+  color: var(--color-muted);
+}
+
+.related-products {
+  background: #120b05;
+}
+
+@media (max-width: 900px) {
+  .product-detail__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-media-gallery__main {
+    position: static;
+    min-height: 420px;
+  }
+
+  .product-media-gallery__thumbs {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .product-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .product-media-gallery__thumbs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+{% endstylesheet %}

@@ -1,0 +1,57 @@
+<section class="section page-section">
+  <div class="container page-content">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1>{{ page.title }}</h1>
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page content",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "W8st Shop" }
+  ],
+  "presets": [{ "name": "Page content" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.page-section {
+  background: var(--color-background);
+}
+
+.page-content {
+  max-width: 860px;
+}
+
+.page-content h1 {
+  margin: 0 0 24px;
+  font-size: clamp(2.8rem, 8vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+}
+
+.rte {
+  color: var(--color-muted);
+  font-size: 1.05rem;
+}
+
+.rte h2,
+.rte h3 {
+  color: var(--color-text);
+  margin-top: 32px;
+}
+
+.rte p {
+  margin: 0 0 18px;
+}
+
+.rte ul,
+.rte ol {
+  padding-left: 20px;
+}
+{% endstylesheet %}

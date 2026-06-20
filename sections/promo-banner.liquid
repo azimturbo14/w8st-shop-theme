@@ -1,0 +1,64 @@
+<section class="promo-banner section">
+  <div class="container promo-banner__inner">
+    <div>
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.text }}</p>
+    </div>
+    <a class="button button--gold" href="{{ section.settings.button_url }}">{{ section.settings.button_label }}</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promotional banner",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Limited offer" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Weekend drop sale" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Get 15% off selected streetwear pieces with same-day pickup in Tashkent." },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Shop sale" },
+    { "type": "url", "id": "button_url", "label": "Button URL", "default": "/collections/sale" }
+  ],
+  "presets": [{ "name": "Promotional banner" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.promo-banner {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.promo-banner__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.promo-banner h2 {
+  margin: 0;
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+}
+
+.promo-banner p:not(.eyebrow) {
+  max-width: 620px;
+  margin: 14px 0 0;
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .promo-banner__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .promo-banner .button {
+    width: 100%;
+    text-align: center;
+  }
+}
+{% endstylesheet %}

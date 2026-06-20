@@ -1,0 +1,13 @@
+<div class="modal size-guide-modal" id="SizeGuideModal" aria-hidden="true">
+  <div class="modal__backdrop" data-close-modal></div>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="SizeGuideTitle">
+    <button class="icon-button modal__close" type="button" data-close-modal aria-label="{{ 'general.accessibility.close' | t }}">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+    <p class="eyebrow">{{ settings.location }}</p>
+    <h2 id="SizeGuideTitle">{{ settings.size_guide_title }}</h2>
+    <div class="size-guide-modal__body">
+      {{ settings.size_guide_body | newline_to_br }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "contact-form", "settings": { "eyebrow": "Talk to us", "title": "Contact W8st Shop", "description": "Questions about sizing, delivery, returns, or custom orders? Send us a message." } }
+  },
+  "order": ["main"]
+}

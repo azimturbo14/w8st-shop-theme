@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "main-page", "settings": { "eyebrow": "About W8st" } }
+  },
+  "order": ["main"]
+}

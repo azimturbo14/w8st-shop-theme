@@ -1,0 +1,106 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Asosiy mazmunga o'tish",
+      "close": "Yopish"
+    },
+    "language": {
+      "label": "Til"
+    }
+  },
+  "sections": {
+    "header": {
+      "menu": "Menyu",
+      "primary_navigation": "Asosiy navigatsiya",
+      "search": "Qidiruv",
+      "search_placeholder": "Qidirish",
+      "wishlist": "Tanlanganlar",
+      "cart": "Savatcha",
+      "about": "Biz haqimizda",
+      "contact": "Aloqa"
+    },
+    "footer": {
+      "about": "Biz haqimizda",
+      "contact": "Aloqa",
+      "shipping_returns": "Yetkazib berish va qaytarish",
+      "newsletter": "Yangi dropni kuzatish",
+      "newsletter_text": "Yangi drop, restock va Toshkent pickup xabarlari.",
+      "email": "Email",
+      "email_placeholder": "Email manzilingiz",
+      "subscribe": "Obuna",
+      "copyright": "Barcha huquqlar himoyalangan.",
+      "secure_checkout": "Xavfsiz to'lov"
+    },
+    "product_card": {
+      "quick_add": "Tez qo'shish",
+      "add_to_cart": "Savatchaga qo'shish",
+      "coming_soon": "Tez orada",
+      "products_loading": "Mahsulotlar do'konga yuklanmoqda.",
+      "browse_all": "Hammasini ko'rish"
+    },
+    "product": {
+      "add_to_cart": "Savatchaga qo'shish",
+      "adding": "Qo'shilmoqda…",
+      "added": "Tayyor.",
+      "added_to_cart": "savatchaga qo'shildi.",
+      "select_variant": "O'lchamni tanlang.",
+      "add_error": "Qo'shib bo'lmadi. Qayta urinib ko'ring.",
+      "product": "Mahsulot",
+      "media_gallery": "Mahsulot rasmlari",
+      "shipping_info": "Yetkazib berish va qaytarish",
+      "shipping_text": "Toshkent bo'ylab tezkor yetkazib berish va pickup checkoutda mavjud.",
+      "returns_text": "O'lcham to'g'ri kelmasa, oson qaytarish mumkin.",
+      "related_eyebrow": "Fitni to'ldiring",
+      "related_title": "O'xshash mahsulotlar"
+    },
+    "collection": {
+      "sort": "Saralash",
+      "manual": "Tanlangan",
+      "best_selling": "Eng sotilgan",
+      "newest": "Yangi",
+      "price_asc": "Narx: arzonroqdan",
+      "price_desc": "Narx: qimmatroqdan",
+      "pagination": "Kolleksiya sahifalari",
+      "previous": "Oldingi",
+      "next": "Keyingi",
+      "empty_title": "Hozircha mahsulot yo'q",
+      "empty_text": "Kolleksiya tayyor. Sotishni boshlash uchun Shopify Admin'da mahsulot qo'shing.",
+      "browse_all": "Barcha mahsulotlarni ko'rish"
+    },
+    "contact": {
+      "location": "Manzil",
+      "hours": "Ish vaqti",
+      "name": "Ism",
+      "email": "Email",
+      "phone": "Telefon",
+      "message": "Xabar",
+      "send": "Xabarni yuborish"
+    }
+  },
+  "cart": {
+    "drawer": {
+      "eyebrow": "W8st Shop",
+      "title": "Savatchangiz",
+      "close": "Savatchani yopish",
+      "empty": "Savatchangiz bo'sh.",
+      "subtotal": "Jami",
+      "view_cart": "Savatchani ko'rish",
+      "checkout": "Rasmiylashtirish"
+    },
+    "page": {
+      "eyebrow": "W8st Shop",
+      "title": "Savatcha",
+      "quantity": "Soni",
+      "decrease": "Sonini kamaytirish",
+      "increase": "Sonini ko'paytirish",
+      "remove": "Olib tashlash",
+      "empty_title": "Savatchangiz bo'sh",
+      "empty_text": "Hozircha hech narsa qo'shilmagan. Quyidan keyingi fittingizni toping.",
+      "continue_shopping": "Xaridni davom ettirish",
+      "order_summary": "Buyurtma xulosasi",
+      "subtotal": "Jami",
+      "taxes_note": "Soliqlar va yetkazib berish checkoutda hisoblanadi.",
+      "checkout": "Rasmiylashtirish"
+    }
+  }
+}
