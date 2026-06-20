@@ -308,12 +308,13 @@ button {
 }
 
 .cart-drawer__item__controls button {
-  width: 32px;
-  height: 32px;
+  min-width: 44px;
+  min-height: 44px;
   border: 1px solid rgba(245, 230, 200, 0.16);
   border-radius: 999px;
   background: transparent;
   color: var(--color-text);
+  font-size: 1.1rem;
 }
 
 .cart-drawer__item__controls span {
@@ -363,12 +364,12 @@ button {
 .modal__panel {
   position: relative;
   width: min(100%, 620px);
-  max-height: min(80vh, 680px);
+  max-height: min(80dvh, 680px);
   overflow: auto;
   border-radius: var(--radius-lg);
   background: #120b05;
   color: var(--color-text);
-  padding: 28px;
+  padding: clamp(20px, 5vw, 28px);
   transform: translateY(16px) scale(0.98);
   opacity: 0;
   transition: transform 0.2s ease, opacity 0.2s ease;
@@ -439,6 +440,7 @@ button {
   position: sticky;
   top: 0;
   z-index: 50;
+  padding-top: max(0px, env(safe-area-inset-top));
   background: color-mix(in srgb, var(--color-background) 92%, #000);
   border-bottom: 1px solid rgba(245, 230, 200, 0.12);
   backdrop-filter: blur(18px);
@@ -642,16 +644,30 @@ button {
   .primary-nav {
     position: fixed;
     inset: 0 0 auto 0;
-    z-index: 80;
+    z-index: 90;
     transform: translateX(100%);
     transition: transform 0.2s ease;
     background: var(--color-background);
     border-bottom: 1px solid rgba(245, 230, 200, 0.14);
-    padding: 110px 24px 24px;
+    padding: 96px 24px 24px;
+  }
+
+  .primary-nav::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.58);
   }
 
   .primary-nav.is-open {
     transform: translateX(0);
+  }
+
+  .primary-nav__close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
   }
 
   .primary-nav ul {
@@ -664,13 +680,19 @@ button {
     font-size: 1.25rem;
   }
 
+  .header-actions {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .header-search {
-    width: 42px;
+    width: min(100%, 260px);
     overflow: visible;
   }
 
   .header-search input {
-    display: none;
+    display: block;
   }
 
   .language-switcher {
@@ -763,6 +785,16 @@ button {
 
   .footer-bottom {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  .newsletter-form {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter-form .button {
+    width: 100%;
   }
 }
 
@@ -1156,8 +1188,10 @@ button {
   max-width: 760px;
   margin: 0;
   font-size: clamp(3rem, 10vw, 7.8rem);
-  line-height: 0.88;
-  letter-spacing: -0.09em;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
   text-transform: uppercase;
 }
 
@@ -1188,11 +1222,6 @@ button {
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
 }
 
-.hero-card__image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
 .hero-placeholder {
   min-height: 520px;

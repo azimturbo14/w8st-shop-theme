@@ -21,18 +21,28 @@
 
   const menuToggle = qs('.menu-toggle');
   const primaryNav = qs('#PrimaryNavigation');
+  const closeMenuButton = qs('[data-close-menu]');
+  const closeMenu = () => {
+    if (!primaryNav || !menuToggle) return;
+    primaryNav.classList.remove('is-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
   if (menuToggle && primaryNav) {
     menuToggle.addEventListener('click', () => {
       const open = primaryNav.classList.toggle('is-open');
       menuToggle.setAttribute('aria-expanded', String(open));
+      document.body.style.overflow = open ? 'hidden' : '';
     });
 
     primaryNav.addEventListener('click', (event) => {
-      if (event.target.closest('a')) {
-        primaryNav.classList.remove('is-open');
-        menuToggle.setAttribute('aria-expanded', 'false');
+      if (event.target.closest('a') || event.target.closest('[data-close-menu]')) {
+        closeMenu();
       }
     });
+  }
+  if (closeMenuButton) {
+    closeMenuButton.addEventListener('click', closeMenu);
   }
   const qsa = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
 
