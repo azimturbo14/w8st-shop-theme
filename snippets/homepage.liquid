@@ -11,10 +11,15 @@
     </div>
     <div class="hero-card" aria-label="Wear the streets. Own the game.">
       <div class="hero-card__image">
-        <div class="hero-placeholder">
-          <span>W8ST</span>
-          <strong>{{ settings.tagline }}</strong>
-        </div>
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url: width: 900 }}" alt="{{ shop.name }}" width="620" height="720" loading="eager">
+        {%- else -%}
+          <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" width="620" height="720" loading="eager">
+        {%- endif -%}
+      </div>
+      <div class="hero-card__caption">
+        <span>W8ST</span>
+        <strong>{{ settings.tagline }}</strong>
       </div>
     </div>
   </div>
