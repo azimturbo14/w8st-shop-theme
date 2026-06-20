@@ -1,4 +1,4 @@
-<article class="product-card" data-product-card>
+<article class="product-card" data-product-card data-category="{{ product.type | handle }} {{ product.vendor | handle }} {% for tag in product.tags %}{{ tag | handle }} {% endfor %}" data-title="{{ product.title | escape }}">
   {%- if product -%}
     <div class="product-card__media">
       <a href="{{ product.url }}">

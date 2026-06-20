@@ -1097,3 +1097,43 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+/* W8st product catalog filters */
+.product-catalog {
+  background: linear-gradient(180deg, var(--color-background), #120b05);
+}
+
+.product-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 28px;
+}
+
+.product-filter {
+  min-height: 44px;
+  border: 1px solid rgba(245, 230, 200, 0.18);
+  border-radius: 999px;
+  background: rgba(245, 230, 200, 0.06);
+  color: var(--color-text);
+  padding: 0 18px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.product-filter.is-active,
+.product-filter[aria-pressed="true"] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.product-card[hidden] {
+  display: none;
+}
+
+.product-catalog__empty {
+  grid-column: 1 / -1;
+}
+

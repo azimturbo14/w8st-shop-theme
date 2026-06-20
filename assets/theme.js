@@ -36,6 +36,44 @@
   }
   const qsa = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
 
+  const normalizeCategory = (value) => String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '')
+    .replace(/ies$/g, 'y');
+
+  const categoryMatches = (filter, categories) => {
+    if (filter === 'all') return true;
+    const aliases = {
+      shoes: ['shoe', 'sneaker', 'sneakers'],
+      backpacks: ['backpack', 'bag', 'bags'],
+      clothes: ['clothing', 'apparel', 'clothes', 'shirt', 'hoodie', 'pants'],
+      sportwear: ['sportswear', 'sport', 'sports', 'gym', 'training', 'active'],
+      streetwear: ['street', 'urban', 'streetwear']
+    };
+    const wanted = [filter, ...(aliases[filter] || [])].map(normalizeCategory);
+    return categories.some((category) => wanted.includes(normalizeCategory(category)));
+  };
+
+  const filterProducts = (filter) => {
+    const cards = qsa('[data-product-card]');
+    cards.forEach((card) => {
+      const categories = `${card.dataset.category || ''} ${card.dataset.title || ''}`.split(/\s+/);
+      card.hidden = !categoryMatches(filter, categories);
+    });
+  };
+
+  qsa('[data-product-filter]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.productFilter || 'all';
+      qsa('[data-product-filter]').forEach((item) => {
+        const active = item === button;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-pressed', String(active));
+      });
+      filterProducts(filter);
+    });
+  });
+
   const openCart = () => {
     const drawer = qs('#CartDrawer');
     if (!drawer) return;
