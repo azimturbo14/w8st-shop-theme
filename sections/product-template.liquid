@@ -44,8 +44,14 @@
                 <div class="option-picker">
                   {%- for value in option.values -%}
                     {%- assign input_id = 'Option-' | append: forloop.index0 | append: '-' | append: product.id -%}
+                    {%- assign option_image = product.featured_media -%}
+                    {%- for variant in product.variants -%}
+                      {%- if variant.options contains value and option_image == product.featured_media -%}
+                        {%- assign option_image = variant.featured_media | default: variant.image | default: product.featured_media -%}
+                      {%- endif -%}
+                    {%- endfor -%}
                     <input type="radio" id="{{ input_id }}" name="options[{{ option.name }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
-                    <label for="{{ input_id }}">{{ value }}</label>
+                    <label for="{{ input_id }}" data-option-image="{{ option_image | image_url: width: 900 }}" data-option-zoom="{{ option_image | image_url: width: 1800 }}">{{ value }}</label>
                   {%- endfor -%}
                 </div>
               </fieldset>

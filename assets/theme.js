@@ -195,11 +195,12 @@
   const updateVariantImage = (form) => {
     const mainImage = qs('#MainProductImage');
     if (!mainImage) return;
-    const variant = getSelectedVariant(form);
-    const image = getVariantImage(variant);
+    const checkedOption = form.querySelector('input[name^="options["]:checked');
+    const label = checkedOption ? document.querySelector(`label[for="${checkedOption.id}"]`) : null;
+    const image = label?.dataset.optionImage || getVariantImage(getSelectedVariant(form));
     if (!image) return;
     mainImage.src = image;
-    mainImage.dataset.zoomSrc = image;
+    mainImage.dataset.zoomSrc = label?.dataset.optionZoom || image;
     qsa('[data-product-media]').forEach((button) => {
       const active = button.dataset.src === image || button.dataset.zoomSrc === image;
       button.classList.toggle('is-active', active);
