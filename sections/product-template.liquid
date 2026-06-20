@@ -209,7 +209,7 @@
 
 .option-group {
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .option-group fieldset {
@@ -239,15 +239,22 @@
 }
 
 .option-picker label {
-  min-width: 48px;
-  min-height: 48px;
-  display: inline-grid;
-  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid rgba(245, 230, 200, 0.18);
   border-radius: 999px;
   color: var(--color-text);
   cursor: pointer;
   font-weight: 950;
+  font-size: 0.86rem;
+  line-height: 1.2;
+  text-align: center;
+  padding: 10px 14px;
+  overflow-wrap: anywhere;
 }
 
 .option-picker input:checked + label {
@@ -340,6 +347,13 @@
 @media (max-width: 560px) {
   .product-media-gallery__thumbs {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .option-picker label {
+    width: 100%;
+    justify-content: flex-start;
+    border-radius: 14px;
+    text-align: left;
   }
 }
 {% endstylesheet %}
