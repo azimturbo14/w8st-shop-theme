@@ -168,9 +168,18 @@
     setTimeout(() => node.remove(), 2600);
   };
 
+  const getVariantImage = (variant) => {
+    if (!variant) return '';
+    return variant.featured_media?.preview_image?.url
+      || variant.featured_media?.image?.url
+      || variant.featured_image
+      || variant.image?.src
+      || '';
+  };
+
   const getSelectedVariant = (form) => {
     const variantJson = form.dataset.variantJson ? JSON.parse(form.dataset.variantJson) : [];
-    if (!variantJson.length) return form.querySelector('input[name="id"]')?.value;
+    if (!variantJson.length) return null;
 
     const selected = {};
     qsa('input[name^="options["]:checked, select[name^="options["]', form).forEach((input) => {
@@ -178,19 +187,30 @@
     });
 
     const selectedOptions = Object.values(selected);
-    const variant = variantJson.find((item) => {
-      if (!item.available) return false;
-      return item.options && item.options.every((option, index) => option === selectedOptions[index]);
-    });
+    return variantJson.find((item) => (
+      item.options && item.options.every((option, index) => option === selectedOptions[index])
+    )) || null;
+  };
 
-    return variant ? variant.id : form.querySelector('input[name="id"]')?.value;
+  const updateVariantImage = (form) => {
+    const mainImage = qs('#MainProductImage');
+    if (!mainImage) return;
+    const variant = getSelectedVariant(form);
+    const image = getVariantImage(variant);
+    if (!image) return;
+    mainImage.src = image;
+    mainImage.dataset.zoomSrc = image;
+    qsa('[data-product-media]').forEach((button) => {
+      const active = button.dataset.src === image || button.dataset.zoomSrc === image;
+      button.classList.toggle('is-active', active);
+    });
   };
 
   const updateVariantId = (form) => {
-    const variantId = getSelectedVariant(form);
+    const variant = getSelectedVariant(form);
     const input = form.querySelector('input[name="id"]');
-    if (input && variantId) input.value = variantId;
-    return variantId;
+    if (input && variant?.id) input.value = variant.id;
+    return variant?.id;
   };
 
   qsa('[data-open-cart]').forEach((button) => {
@@ -214,10 +234,16 @@
       const button = qs('button[type="submit"]', form);
       const status = qs('[data-product-status]', form);
       const originalText = button?.textContent;
-      const variantId = updateVariantId(form);
+      const variant = getSelectedVariant(form);
+      const variantId = variant?.id;
 
       if (!variantId) {
         if (status) status.textContent = '{{ 'sections.product.select_variant' | t }}';
+        return;
+      }
+
+      if (!variant.available) {
+        if (status) status.textContent = 'This variant is unavailable.';
         return;
       }
 
@@ -243,7 +269,10 @@
       }
     });
 
-    form.addEventListener('change', () => updateVariantId(form));
+    form.addEventListener('change', () => {
+      updateVariantId(form);
+      updateVariantImage(form);
+    });
   });
 
   qsa('[data-quick-add]').forEach((button) => {
