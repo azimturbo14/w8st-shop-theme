@@ -1,1 +1,76 @@
-[]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "W8st Shop",
+    "theme_version": "2.0.0",
+    "theme_author": "W8st Shop",
+    "theme_documentation_url": "https://w8stshop.com",
+    "theme_support_url": "https://w8stshop.com/pages/contact",
+    "theme_support_email": "support@w8stshop.com"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "color_background", "label": "Background", "default": "#1a1208" },
+      { "type": "color", "id": "color_surface", "label": "Surface", "default": "#f5e6c8" },
+      { "type": "color", "id": "color_text", "label": "Text", "default": "#f5e6c8" },
+      { "type": "color", "id": "color_muted", "label": "Muted text", "default": "#c9b994" },
+      { "type": "color", "id": "color_accent", "label": "Accent", "default": "#e8b84b" },
+      { "type": "color", "id": "color_accent_text", "label": "Accent text", "default": "#1a1208" }
+    ]
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo" },
+      { "type": "text", "id": "tagline", "label": "Tagline", "default": "Wear the streets. Own the game." },
+      { "type": "text", "id": "location", "label": "Location", "default": "Tashkent, Uzbekistan" }
+    ]
+  },
+  {
+    "name": "Header",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo" },
+      { "type": "checkbox", "id": "show_announcement", "label": "Show announcement", "default": false },
+      { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Free delivery across Tashkent over 500 000 UZS" },
+      { "type": "text", "id": "menu_label_1", "label": "Menu item 1", "default": "Home" },
+      { "type": "url", "id": "menu_url_1", "label": "Menu URL 1", "default": "/" },
+      { "type": "text", "id": "menu_label_2", "label": "Menu item 2", "default": "Products" },
+      { "type": "url", "id": "menu_url_2", "label": "Menu URL 2", "default": "/collections/all" },
+      { "type": "text", "id": "menu_label_3", "label": "Menu item 3", "default": "About" },
+      { "type": "url", "id": "menu_url_3", "label": "Menu URL 3", "default": "/pages/about" },
+      { "type": "text", "id": "menu_label_4", "label": "Menu item 4", "default": "Contact" },
+      { "type": "url", "id": "menu_url_4", "label": "Menu URL 4", "default": "/pages/contact" }
+    ]
+  },
+  {
+    "name": "Product",
+    "settings": [
+      { "type": "checkbox", "id": "show_size_guide", "label": "Show size guide", "default": true },
+      { "type": "text", "id": "size_guide_title", "label": "Size guide title", "default": "Size guide" },
+      { "type": "textarea", "id": "size_guide_body", "label": "Size guide body", "default": "Measure your chest, waist and hips. Choose your usual streetwear fit or size up for an oversized look." },
+      { "type": "checkbox", "id": "show_shipping_accordion", "label": "Show shipping accordion", "default": true }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      { "type": "checkbox", "id": "show_free_shipping", "label": "Show free shipping progress", "default": true },
+      { "type": "range", "id": "free_shipping_threshold", "label": "Free shipping threshold", "default": 500000, "min": 0, "max": 5000000, "step": 50000 },
+      { "type": "text", "id": "free_shipping_label", "label": "Free shipping label", "default": "Free shipping in Tashkent over 500 000 UZS" }
+    ]
+  },
+  {
+    "name": "Footer",
+    "settings": [
+      { "type": "text", "id": "tagline", "label": "Tagline", "default": "Wear the streets. Own the game." },
+      { "type": "text", "id": "location", "label": "Location", "default": "Tashkent, Uzbekistan" },
+      { "type": "text", "id": "footer_column_1_title", "label": "Footer column 1 title", "default": "Shop" },
+      { "type": "textarea", "id": "footer_column_1_links", "label": "Footer column 1 links", "default": "All Products\nShoes\nBackpacks\nClothes" },
+      { "type": "text", "id": "footer_column_2_title", "label": "Footer column 2 title", "default": "Help" },
+      { "type": "textarea", "id": "footer_column_2_links", "label": "Footer column 2 links", "default": "About\nContact\nShipping & Returns" },
+      { "type": "url", "id": "instagram_url", "label": "Instagram URL", "default": "https://instagram.com/w8stshop" },
+      { "type": "url", "id": "telegram_url", "label": "Telegram URL", "default": "https://t.me/w8stshop" }
+    ]
+  }
+]

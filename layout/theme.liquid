@@ -11,7 +11,6 @@
   {% endif %}
   {{ content_for_header }}
   {{ 'theme.css' | asset_url | stylesheet_tag }}
-  {{ 'theme.js' | asset_url | script_tag }}
 </head>
 
 <body class="template-{{ template.name }}">
@@ -27,5 +26,6 @@
 
   {% render 'cart-drawer' %}
   {% render 'size-guide-modal' %}
+  {{ 'theme.js' | asset_url | script_tag }}
 </body>
 </html>
