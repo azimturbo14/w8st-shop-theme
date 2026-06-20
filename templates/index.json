@@ -11,7 +11,7 @@
       },
       "block_order": ["clothing", "sportswear", "accessories"]
     },
-    "featured": { "type": "featured-products", "settings": { "eyebrow": "Featured", "title": "Fresh drops", "description": "Add a collection in Shopify and this section will show your real products automatically.", "products_to_show": 4, "collection": "" } },
+    "featured": { "type": "featured-products", "settings": { "eyebrow": "Featured", "title": "Fresh drops", "description": "Add a collection in Shopify and this section will show your real products automatically.", "products_to_show": 4, "collection": "all" } },
     "sport": { "type": "sport-collection", "settings": { "eyebrow": "Performance", "title": "Sport collection", "description": "Use your Shopify collections to show training and active pieces here.", "button_label": "Shop sportswear", "button_url": "/collections/sportswear" } },
     "promo": { "type": "promo-banner", "settings": { "eyebrow": "Limited offer", "title": "Weekend drop sale", "text": "Edit this message in the theme editor when you are ready to run a promotion.", "button_label": "Shop sale", "button_url": "/collections/sale" } },
     "lookbook": {
