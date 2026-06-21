@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "eyebrow": "Search",
+        "title": "Search our store"
+      }
+    }
+  },
+  "order": ["main"]
+}
