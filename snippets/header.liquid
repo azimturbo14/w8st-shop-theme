@@ -1,7 +1,7 @@
 <header class="header">
   <div class="header-inner">
     <a href="/" class="logo">
-      {{ 'logo.png' | asset_url | img_tag: shop.name }}
+      {{ 'logo.svg' | asset_url | img_tag: shop.name }}
     </a>
     <button class="hamburger" id="hamburger">☰</button>
     <nav class="nav" id="nav">
@@ -24,10 +24,3 @@
     </div>
   </div>
 </header>
-
-{% schema %}
-{
-  "name": "Header",
-  "settings": []
-}
-{% endschema %}
