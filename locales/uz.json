@@ -1,0 +1,108 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Teglar",
+      "price": "Narx"
+    },
+    "breadcrumbs": {
+      "home": "Bosh sahifa"
+    },
+    "pagination": {
+      "previous": "Oldingi",
+      "next": "Keyingi"
+    },
+    "search": {
+      "title": "Qidiruv",
+      "placeholder": "Do'konda qidirish",
+      "submit": "Qidirish",
+      "no_results": "\"{{ terms }}\" uchun natija topilmadi"
+    },
+    "cart": {
+      "title": "Savatchangiz",
+      "empty": "Savatchangiz bo'sh",
+      "continue_shopping": "Xaridni davom ettirish",
+      "checkout": "Rasmiylashtirish",
+      "remove": "O'chirish",
+      "subtotal": "Jami",
+      "shipping_note": "Yetkazib berish va soliqlar rasmiylashtirishda hisoblanadi"
+    }
+  },
+  "sections": {
+    "header": {
+      "new": "Yangi",
+      "clothes": "Kiyimlar",
+      "sport": "Sport",
+      "sale": "Chegirmalar",
+      "about": "Biz haqimizda",
+      "contact": "Aloqa",
+      "cart": "Savatcha"
+    },
+    "hero": {
+      "heading": "Ko'chalarni kiying. O'yinni boshqaring.",
+      "subheading": "Toshkentdan premium streetwear",
+      "shop_now": "Xarid qilish",
+      "view_lookbook": "Lookbook ko'rish"
+    },
+    "ticker": {
+      "text": "$100 DAN YUQORI BUYURTMALARDA BEPUL YETKAZIB BERISH • HAR JUMA YANGI TUSHIMLAR • W8ST SHOP TOSHKENT"
+    },
+    "categories": {
+      "streetwear": "Streetwear",
+      "sportswear": "Sport kiyimlari",
+      "accessories": "Aksessuarlar"
+    },
+    "featured": {
+      "title": "Yangi kelganlar"
+    },
+    "sport": {
+      "title": "Sport kolleksiyasi"
+    },
+    "promo": {
+      "text": "YOZGI CHEGIRMA - 50% GACHA",
+      "cta": "Chegirmali xarid"
+    },
+    "trust": {
+      "free_shipping": "Bepul yetkazib berish",
+      "easy_returns": "Oson qaytarish",
+      "quality": "Kafolatlangan sifat"
+    },
+    "footer": {
+      "shop": "Do'kon",
+      "help": "Yordam",
+      "about": "Biz haqimizda",
+      "social": "Ijtimoiy tarmoqlar",
+      "copyright": "© 2026 W8st Shop Toshkent"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Savatchaga qo'shish",
+      "sold_out": "Tugagan",
+      "size": "O'lcham",
+      "color": "Rang",
+      "quantity": "Miqdor",
+      "description": "Tavsif",
+      "shipping": "Yetkazib berish ma'lumoti",
+      "size_guide": "O'lcham jadvali"
+    }
+  },
+  "pages": {
+    "404": {
+      "title": "Sahifa topilmadi",
+      "message": "Siz qidirayotgan sahifa mavjud emas.",
+      "back_home": "Bosh sahifaga qaytish"
+    },
+    "contact": {
+      "title": "Biz bilan bog'laning",
+      "name": "Ism",
+      "email": "Email",
+      "message": "Xabar",
+      "send": "Xabar yuborish",
+      "location": "Toshkent, O'zbekiston"
+    },
+    "about": {
+      "title": "W8st Shop haqida",
+      "story": "Bizning hikoyamiz"
+    }
+  }
+}

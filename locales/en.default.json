@@ -1,0 +1,108 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tags",
+      "price": "Price"
+    },
+    "breadcrumbs": {
+      "home": "Home"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "search": {
+      "title": "Search",
+      "placeholder": "Search our store",
+      "submit": "Search",
+      "no_results": "No results found for \"{{ terms }}\""
+    },
+    "cart": {
+      "title": "Your Cart",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue Shopping",
+      "checkout": "Checkout",
+      "remove": "Remove",
+      "subtotal": "Subtotal",
+      "shipping_note": "Shipping & taxes calculated at checkout"
+    }
+  },
+  "sections": {
+    "header": {
+      "new": "New",
+      "clothes": "Clothes",
+      "sport": "Sport",
+      "sale": "Sale",
+      "about": "About",
+      "contact": "Contact",
+      "cart": "Cart"
+    },
+    "hero": {
+      "heading": "Wear the streets. Own the game.",
+      "subheading": "Premium streetwear from Tashkent",
+      "shop_now": "Shop Now",
+      "view_lookbook": "View Lookbook"
+    },
+    "ticker": {
+      "text": "FREE SHIPPING ON ORDERS OVER $100 • NEW DROPS EVERY FRIDAY • W8ST SHOP TASHKENT"
+    },
+    "categories": {
+      "streetwear": "Streetwear",
+      "sportswear": "Sportswear",
+      "accessories": "Accessories"
+    },
+    "featured": {
+      "title": "New Arrivals"
+    },
+    "sport": {
+      "title": "Sport Collection"
+    },
+    "promo": {
+      "text": "SUMMER SALE - UP TO 50% OFF",
+      "cta": "Shop Sale"
+    },
+    "trust": {
+      "free_shipping": "Free Shipping",
+      "easy_returns": "Easy Returns",
+      "quality": "Quality Guaranteed"
+    },
+    "footer": {
+      "shop": "Shop",
+      "help": "Help",
+      "about": "About",
+      "social": "Social",
+      "copyright": "© 2026 W8st Shop Tashkent"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "sold_out": "Sold Out",
+      "size": "Size",
+      "color": "Color",
+      "quantity": "Quantity",
+      "description": "Description",
+      "shipping": "Shipping Info",
+      "size_guide": "Size Guide"
+    }
+  },
+  "pages": {
+    "404": {
+      "title": "Page Not Found",
+      "message": "The page you're looking for doesn't exist.",
+      "back_home": "Go Back Home"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send Message",
+      "location": "Tashkent, Uzbekistan"
+    },
+    "about": {
+      "title": "About W8st Shop",
+      "story": "Our Story"
+    }
+  }
+}
