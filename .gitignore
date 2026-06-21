@@ -1,7 +1,4 @@
 ```
-# Compressed files
-*.zip
-
-# Logs and temp files
-*.tmp
+# Shopify/Liquid templates
+templates/*.liquid
 ```

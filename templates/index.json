@@ -12,8 +12,8 @@
         "subheading": "Streetwear, sportswear, shoes, backpacks, and everyday essentials from Tashkent.",
         "primary_button_label": "Shop all products",
         "primary_button_url": "/collections/all",
-        "secondary_button_label": "All products",
-        "secondary_button_url": "/collections/all"
+        "secondary_button_label": "Explore sportswear",
+        "secondary_button_url": "/collections/sportswear"
       }
     },
     "ticker": {
@@ -27,13 +27,89 @@
       "settings": {
         "eyebrow": "Shop by category",
         "title": "Browse categories"
+      },
+      "blocks": {
+        "block-1": {
+          "type": "category",
+          "settings": {
+            "title": "Streetwear",
+            "url": "/collections/streetwear",
+            "button_label": "Shop streetwear"
+          }
+        },
+        "block-2": {
+          "type": "category",
+          "settings": {
+            "title": "Sportswear",
+            "url": "/collections/sportswear",
+            "button_label": "Shop sportswear"
+          }
+        },
+        "block-3": {
+          "type": "category",
+          "settings": {
+            "title": "Accessories",
+            "url": "/collections/accessories",
+            "button_label": "Shop accessories"
+          }
+        }
       }
     },
     "featured-products": {
       "type": "featured-products",
       "settings": {
-        "eyebrow": "Featured",
-        "title": "New arrivals"
+        "eyebrow": "New arrivals",
+        "title": "Fresh drops",
+        "products_to_show": 4
+      }
+    },
+    "sport-collection": {
+      "type": "sport-collection",
+      "settings": {
+        "eyebrow": "Built to move",
+        "title": "Sport collection",
+        "description": "Performance fabrics, flexible cuts, and clean silhouettes for training and everyday motion.",
+        "button_label": "Shop sportswear",
+        "button_url": "/collections/sportswear"
+      }
+    },
+    "promo-banner": {
+      "type": "promo-banner",
+      "settings": {
+        "eyebrow": "Limited offer",
+        "title": "Weekend drop sale",
+        "text": "Get 15% off selected streetwear pieces with same-day pickup in Tashkent.",
+        "button_label": "Shop sale",
+        "button_url": "/collections/sale"
+      }
+    },
+    "trust-badges": {
+      "type": "trust-badges",
+      "blocks": {
+        "block-1": {
+          "type": "badge",
+          "settings": {
+            "icon": "🚚",
+            "title": "Free shipping",
+            "text": "Free delivery across Tashkent over 500 000 UZS."
+          }
+        },
+        "block-2": {
+          "type": "badge",
+          "settings": {
+            "icon": "↩️",
+            "title": "Easy returns",
+            "text": "Simple returns if the fit is not right."
+          }
+        },
+        "block-3": {
+          "type": "badge",
+          "settings": {
+            "icon": "✓",
+            "title": "Quality guaranteed",
+            "text": "Checked before dispatch for clean finishing."
+          }
+        }
       }
     },
     "footer": {
@@ -41,5 +117,5 @@
       "settings": {}
     }
   },
-  "order": ["header", "hero", "ticker", "category-grid", "featured-products", "footer"]
+  "order": ["header", "hero", "ticker", "category-grid", "featured-products", "sport-collection", "promo-banner", "trust-badges", "footer"]
 }
