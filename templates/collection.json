@@ -1,6 +1,9 @@
 {
   "sections": {
-    "main": { "type": "collection-template", "settings": { "eyebrow": "Shop the collection", "products_per_page": 12 } }
+    "main": {
+      "type": "collection-template",
+      "settings": {}
+    }
   },
   "order": ["main"]
 }

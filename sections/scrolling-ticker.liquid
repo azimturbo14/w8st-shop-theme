@@ -1,55 +1,27 @@
-<section class="ticker-section" aria-label="{{ section.settings.title }}">
-  <div class="ticker-track">
-    <div class="ticker-content">
-      <span>{{ section.settings.text }}</span>
-      <span>{{ section.settings.text }}</span>
-      <span>{{ section.settings.text }}</span>
-      <span>{{ section.settings.text }}</span>
-    </div>
+<section class="scrolling-ticker">
+  <div class="ticker-content">
+    <span>{{ section.settings.text }}</span>
+    <span>{{ section.settings.text }}</span>
+    <span>{{ section.settings.text }}</span>
+    <span>{{ section.settings.text }}</span>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Scrolling ticker",
+  "name": "Scrolling Ticker",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title", "default": "Promotions" },
-    { "type": "text", "id": "text", "label": "Ticker text", "default": "FREE TASHKENT DELIVERY • SAME DAY PICKUP • NEW DROPS EVERY FRIDAY • " }
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Ticker Text",
+      "default": "Free Shipping on Orders Over $50 • New Drops Every Week • Wear the Streets. Own the Game."
+    }
   ],
-  "presets": [{ "name": "Scrolling ticker" }]
+  "presets": [
+    {
+      "name": "Scrolling Ticker"
+    }
+  ]
 }
 {% endschema %}
-
-{% stylesheet %}
-.ticker-section {
-  overflow: hidden;
-  background: var(--color-accent);
-  color: var(--color-accent-text);
-  font-weight: 950;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.ticker-track {
-  display: flex;
-  width: max-content;
-  animation: ticker 24s linear infinite;
-}
-
-.ticker-content {
-  display: flex;
-  gap: 42px;
-  padding: 14px 0;
-}
-
-@keyframes ticker {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ticker-track {
-    animation: none;
-  }
-}
-{% endstylesheet %}

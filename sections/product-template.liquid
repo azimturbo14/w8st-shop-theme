@@ -1,424 +1,124 @@
-<section class="section product-detail">
-  <div class="container product-detail__grid">
-    <div class="product-media-gallery" data-gallery>
-      {%- assign featured = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
-      <div class="product-media-gallery__main">
-        {% if featured != blank %}
-          <img id="MainProductImage" src="{{ featured | image_url: width: 900 }}" alt="{{ featured.alt | default: product.title | escape }}" width="900" height="1080" loading="eager" data-zoom-src="{{ featured | image_url: width: 1800 }}">
+<div class="product-template">
+  <div class="product-main">
+    <div class="product-gallery">
+      <div class="product-main-image">
+        <img src="{{ product.featured_image | img_url: '1000x' }}" alt="{{ product.title }}" id="main-product-image">
+      </div>
+      {% if product.images.size > 1 %}
+      <div class="product-thumbnails">
+        {% for image in product.images %}
+        <div class="thumbnail {% if forloop.first %}active{% endif %}">
+          <img src="{{ image | img_url: '200x' }}" alt="{{ product.title }}">
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    
+    <div class="product-info">
+      <h1 class="product-title">{{ product.title }}</h1>
+      <div class="product-price">
+        {% if product.compare_at_price > product.price %}
+          <span class="price-sale">{{ product.price | money }}</span>
+          <span class="price-original">{{ product.compare_at_price | money }}</span>
         {% else %}
-          <div class="product-placeholder">W8ST</div>
+          <span>{{ product.price | money }}</span>
         {% endif %}
       </div>
-      <div class="product-media-gallery__thumbs" aria-label="{{ 'sections.product.media_gallery' | t }}">
-        {%- for media in product.media limit: 6 -%}
-          <button type="button" data-product-media data-media-id="{{ media.id }}" data-src="{{ media.preview_image | image_url: width: 300 }}" data-zoom-src="{{ media | image_url: width: 1800 }}" {% if forloop.first %}class="is-active"{% endif %} aria-label="{{ media.alt | default: product.title | escape }}">
-            <img src="{{ media.preview_image | image_url: width: 220 }}" alt="" width="80" height="96" loading="lazy">
-          </button>
-        {%- endfor -%}
-      </div>
-    </div>
-
-    <div class="product-detail__info">
-      <p class="eyebrow">{{ product.vendor | default: shop.name }}</p>
-      <h1>{{ product.title }}</h1>
-      <div class="product-detail__prices">
-        <span class="price">{{ product.selected_or_first_available_variant.price | money }}</span>
-        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
-          <span class="price price--compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
-        {%- endif -%}
-      </div>
-      <div class="product-detail__description">{{ product.description }}</div>
-
-      <form class="product-form" data-product-form data-variant-json='{{ product.variants | json }}'>
+      
+      <form data-add-to-cart class="product-form">
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-
-        {%- unless product.has_only_default_variant -%}
-          <div class="option-group">
-            {%- for option in product.options_with_values -%}
-              {%- assign option_index = forloop.index0 -%}
-              <fieldset>
-                <legend>{{ option.name }}</legend>
-                <div class="option-picker">
-                  {%- for value in option.values -%}
-                    {%- assign input_id = 'Option-' | append: option_index | append: '-' | append: forloop.index0 | append: '-' | append: product.id -%}
-                    {%- assign option_image = product.featured_media -%}
-                    {%- assign option_media_id = product.featured_media.id -%}
-                    {%- assign option_available = false -%}
-                    {%- for variant in product.variants -%}
-                      {%- if variant.options[option_index] == value -%}
-                        {%- if variant.available -%}
-                          {%- assign option_available = true -%}
-                        {%- endif -%}
-                        {%- if option_image == product.featured_media -%}
-                          {%- assign option_image = variant.featured_media | default: variant.image | default: product.featured_media -%}
-                          {%- assign option_media_id = option_image.id -%}
-                        {%- endif -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-                    <input type="radio" id="{{ input_id }}" name="options[{{ option.name }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} {% unless option_available %}disabled{% endunless %}>
-                    <label for="{{ input_id }}" data-option-image="{{ option_image | image_url: width: 900 }}" data-option-zoom="{{ option_image | image_url: width: 1800 }}" data-media-id="{{ option_media_id }}" {% unless option_available %}class="is-unavailable"{% endunless %}>{{ value }}</label>
-                  {%- endfor -%}
-                </div>
-              </fieldset>
-            {%- endfor -%}
-          </div>
-        {%- endunless -%}
-
-        <div class="product-actions">
-          <button class="button button--gold button--large" type="submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>{{ 'sections.product.add_to_cart' | t }}</button>
-          <button class="button button--outline" type="button" data-open-size-guide>{{ settings.size_guide_title }}</button>
-        </div>
-        <p class="product-status" data-product-status aria-live="polite"></p>
-      </form>
-
-      {%- if settings.show_shipping_accordion -%}
-        <div class="accordion product-accordion">
-          <button class="accordion__trigger" type="button" aria-expanded="false">
-            {{ 'sections.product.shipping_info' | t }}
-            <span aria-hidden="true">+</span>
-          </button>
-          <div class="accordion__panel">
-            <div>
-              <p>{{ 'sections.product.shipping_text' | t }}</p>
-              <p>{{ 'sections.product.returns_text' | t }}</p>
+        
+        <div class="product-options">
+          {% if product.has_only_default_variant == false %}
+            {% for option in product.options_with_values %}
+            <div class="option-group">
+              <label class="option-label">{{ option.name }}</label>
+              {% if option.name == 'Size' %}
+              <div class="size-selector">
+                {% for value in option.values %}
+                <button type="button" class="size-btn {% if option.selected_value == value %}selected{% endif %}" 
+                        data-value="{{ value }}">{{ value }}</button>
+                {% endfor %}
+                <button type="button" data-open-size-guide style="margin-left: 0.5rem; font-size: 0.75rem; color: #b8a882;">{{ 'products.product.size_guide' | t }}</button>
+              </div>
+              {% elsif option.name == 'Color' %}
+              <div class="color-selector">
+                {% for value in option.values %}
+                <button type="button" class="color-btn {% if option.selected_value == value %}selected{% endif %}" 
+                        style="background: {{ value | handleize }};" data-value="{{ value }}"></button>
+                {% endfor %}
+              </div>
+              {% else %}
+              <select name="options[{{ option.name }}]" class="form-input">
+                {% for value in option.values %}
+                <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+              </select>
+              {% endif %}
             </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+        
+        <div class="quantity-selector">
+          <label class="option-label">{{ 'products.product.quantity' | t }}</label>
+          <input type="number" name="quantity" value="1" min="1" class="qty-input">
+        </div>
+        
+        <button type="submit" class="add-to-cart-btn">{{ 'products.product.add_to_cart' | t }}</button>
+      </form>
+      
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">
+            {{ 'products.product.description' | t }}
+            <span>+</span>
+          </button>
+          <div class="accordion-content">
+            {{ product.description }}
           </div>
         </div>
-      {%- endif -%}
+        <div class="accordion-item">
+          <button class="accordion-header">
+            {{ 'products.product.shipping' | t }}
+            <span>+</span>
+          </button>
+          <div class="accordion-content">
+            <p>{{ 'products.product.shipping_info' | t }}</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            {{ 'products.product.returns' | t }}
+            <span>+</span>
+          </button>
+          <div class="accordion-content">
+            <p>{{ 'products.product.returns_info' | t }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</section>
+  
+  {% if recommendations.products_count > 0 %}
+  <div class="related-products">
+    <h2>{{ 'products.product.related' | t }}</h2>
+    <div class="product-grid">
+      {% for product in recommendations.products limit: 4 %}
+        {% render 'product-card', product: product %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
 
-<section class="section related-products">
-  <div class="container">
-    <div class="section-heading">
-      <p class="eyebrow">{{ 'sections.product.related_eyebrow' | t }}</p>
-      <h2>{{ 'sections.product.related_title' | t }}</h2>
-    </div>
-    <div id="product-recommendations" class="product-grid" data-product-recommendations data-product-id="{{ product.id }}"></div>
-  </div>
-</section>
+{% render 'size-guide-modal' %}
 
 {% schema %}
 {
-  "name": "Product page",
+  "name": "Product Template",
   "settings": [],
-  "presets": [{ "name": "Product page" }]
+  "templates": ["product"]
 }
 {% endschema %}
-
-{% stylesheet %}
-.product-detail {
-  background: var(--color-background);
-}
-
-.product-detail__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.85fr);
-  gap: clamp(28px, 5vw, 72px);
-  align-items: start;
-}
-
-.product-media-gallery__main {
-  position: sticky;
-  top: 96px;
-  overflow: hidden;
-  min-height: 560px;
-  border-radius: var(--radius-lg);
-  background: rgba(245, 230, 200, 0.06);
-}
-
-.product-media-gallery__main img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.12s ease;
-}
-
-.product-media-gallery__thumbs {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.product-media-gallery__thumbs button {
-  overflow: hidden;
-  border: 2px solid transparent;
-  border-radius: 12px;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-}
-
-.product-media-gallery__thumbs button.is-active {
-  border-color: var(--color-accent);
-}
-
-.product-media-gallery__thumbs img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1.2;
-  object-fit: cover;
-}
-
-.product-media-gallery__thumbs span {
-  display: grid;
-  min-height: 80px;
-  place-items: center;
-  color: rgba(232, 184, 75, 0.45);
-  font-weight: 1000;
-}
-
-.product-detail__info {
-  display: grid;
-  gap: 18px;
-}
-
-.product-detail h1 {
-  margin: 0;
-  font-size: clamp(2.4rem, 6vw, 5rem);
-  line-height: 0.95;
-  letter-spacing: -0.08em;
-  text-transform: uppercase;
-}
-
-.product-detail__prices {
-  display: flex;
-  gap: 12px;
-  align-items: baseline;
-  color: var(--color-accent);
-  font-size: 1.35rem;
-  font-weight: 950;
-}
-
-.price--compare {
-  color: var(--color-muted);
-  font-size: 1rem;
-  text-decoration: line-through;
-}
-
-.product-detail__description {
-  color: var(--color-muted);
-}
-
-.product-detail__description p {
-  margin: 0 0 14px;
-}
-
-.option-group {
-  display: grid;
-  gap: 16px;
-}
-
-.option-group fieldset {
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-.option-group legend {
-  margin-bottom: 8px;
-  font-size: 0.82rem;
-  font-weight: 950;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.option-picker {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.option-picker input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.option-picker label {
-  min-width: 44px;
-  min-height: 44px;
-  max-width: 100%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(245, 230, 200, 0.18);
-  border-radius: 999px;
-  color: var(--color-text);
-  cursor: pointer;
-  font-weight: 950;
-  font-size: 0.86rem;
-  line-height: 1.2;
-  text-align: center;
-  padding: 10px 14px;
-  overflow-wrap: anywhere;
-}
-
-.option-picker input:checked + label {
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: var(--color-accent-text);
-}
-
-.option-picker label.is-unavailable {
-  opacity: 0.45;
-  text-decoration: line-through;
-  cursor: not-allowed;
-}
-
-.product-actions {
-  display: grid;
-  grid-template-columns: 1.4fr 0.8fr;
-  gap: 10px;
-}
-
-.product-status {
-  min-height: 22px;
-  margin: 0;
-  color: var(--color-accent);
-  font-weight: 800;
-}
-
-.accordion {
-  border-top: 1px solid rgba(245, 230, 200, 0.14);
-}
-
-.accordion__trigger {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  border: 0;
-  background: transparent;
-  color: var(--color-text);
-  padding: 18px 0;
-  font-weight: 950;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.accordion__panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.2s ease;
-}
-
-.accordion__panel > div {
-  overflow: hidden;
-}
-
-.accordion__trigger[aria-expanded="true"] + .accordion__panel {
-  grid-template-rows: 1fr;
-}
-
-.accordion__panel p {
-  margin: 0 0 12px;
-  color: var(--color-muted);
-}
-
-.related-products {
-  background: var(--color-background);
-  color: var(--color-text);
-}
-
-.related-products .product-card {
-  color: var(--color-text);
-}
-
-.related-products .product-card p {
-  color: var(--color-muted);
-}
-
-.related-products .product-card {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  overflow: hidden;
-  border-radius: var(--radius-md);
-  background: rgba(245, 230, 200, 0.06);
-  border: 1px solid rgba(245, 230, 200, 0.1);
-}
-
-.related-products .product-card__media {
-  position: relative;
-  aspect-ratio: 5 / 6;
-  overflow: hidden;
-  background: rgba(245, 230, 200, 0.06);
-}
-
-.related-products .product-card__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.related-products .product-card__info {
-  display: grid;
-  gap: 10px;
-  padding: 16px;
-}
-
-.related-products .product-card h3 {
-  margin: 0;
-  min-height: 42px;
-  display: -webkit-box;
-  overflow: hidden;
-  font-size: 1rem;
-  line-height: 1.25;
-  text-transform: uppercase;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-.related-products .product-card h3 a {
-  color: var(--color-text);
-  text-decoration: none;
-}
-
-.related-products .product-card__prices {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  color: var(--color-accent);
-  font-weight: 950;
-}
-
-.related-products .price--compare {
-  color: var(--color-muted);
-  font-weight: 700;
-  text-decoration: line-through;
-}
-
-@media (max-width: 900px) {
-  .product-detail__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .product-media-gallery__main {
-    position: static;
-    min-height: 420px;
-  }
-
-  .product-media-gallery__thumbs {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .product-actions {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 560px) {
-  .product-media-gallery__thumbs {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .option-picker label {
-    width: 100%;
-    justify-content: flex-start;
-    border-radius: 14px;
-    text-align: left;
-  }
-}
-{% endstylesheet %}

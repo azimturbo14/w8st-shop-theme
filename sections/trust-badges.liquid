@@ -1,81 +1,31 @@
-<section class="section trust-section">
-  <div class="container trust-grid">
-    {%- for block in section.blocks -%}
-      <div class="trust-card">
-        <div class="trust-card__icon">{{ block.settings.icon }}</div>
-        <h3>{{ block.settings.title }}</h3>
-        <p>{{ block.settings.text }}</p>
-      </div>
-    {%- endfor -%}
+<section class="trust-badges-section">
+  <div class="trust-badges">
+    <div class="trust-badge">
+      <div class="trust-badge-icon">🚚</div>
+      <h4>{{ 'sections.trust.free_shipping' | t }}</h4>
+      <p>{{ 'sections.trust.free_shipping_desc' | t }}</p>
+    </div>
+    <div class="trust-badge">
+      <div class="trust-badge-icon">↩️</div>
+      <h4>{{ 'sections.trust.easy_returns' | t }}</h4>
+      <p>{{ 'sections.trust.easy_returns_desc' | t }}</p>
+    </div>
+    <div class="trust-badge">
+      <div class="trust-badge-icon">✓</div>
+      <h4>{{ 'sections.trust.quality' | t }}</h4>
+      <p>{{ 'sections.trust.quality_desc' | t }}</p>
+    </div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Trust badges",
-  "blocks": [
-    { "type": "badge", "name": "Badge", "settings": [
-      { "type": "text", "id": "icon", "label": "Icon/emoji", "default": "🚚" },
-      { "type": "text", "id": "title", "label": "Title", "default": "Free shipping" },
-      { "type": "textarea", "id": "text", "label": "Text", "default": "Fast delivery across Tashkent." }
-    ]}
-  ],
+  "name": "Trust Badges",
+  "settings": [],
   "presets": [
     {
-      "name": "Trust badges",
-      "blocks": [
-        { "type": "badge", "settings": { "icon": "🚚", "title": "Free shipping", "text": "Free delivery across Tashkent over 500 000 UZS." } },
-        { "type": "badge", "settings": { "icon": "↩️", "title": "Easy returns", "text": "Simple returns if the fit is not right." } },
-        { "type": "badge", "settings": { "icon": "✓", "title": "Quality guaranteed", "text": "Checked before dispatch for clean finishing." } }
-      ]
+      "name": "Trust Badges"
     }
   ]
 }
 {% endschema %}
-
-{% stylesheet %}
-.trust-section {
-  background: var(--color-surface);
-  color: #1a1208;
-}
-
-.trust-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.trust-card {
-  padding: 24px;
-  border-radius: var(--radius-md);
-  background: #fff7e6;
-  box-shadow: 0 16px 40px rgba(26, 18, 8, 0.08);
-}
-
-.trust-card__icon {
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  background: var(--color-accent);
-  color: #1a1208;
-  font-weight: 950;
-}
-
-.trust-card h3 {
-  margin: 16px 0 8px;
-  text-transform: uppercase;
-}
-
-.trust-card p {
-  margin: 0;
-  color: #5f4622;
-}
-
-@media (max-width: 760px) {
-  .trust-grid {
-    grid-template-columns: 1fr;
-  }
-}
-{% endstylesheet %}

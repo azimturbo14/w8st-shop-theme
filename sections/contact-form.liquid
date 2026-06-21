@@ -1,110 +1,54 @@
-<section class="section contact-section" id="contact-form">
-  <div class="container contact-grid">
-    <div>
-      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
-      <h1>{{ section.settings.title }}</h1>
-      <p>{{ section.settings.description }}</p>
-      <div class="contact-details">
-        <p><strong>{{ 'sections.contact.location' | t }}:</strong> {{ settings.location }}</p>
-        <p><strong>Email:</strong> {{ shop.email }}</p>
-        <p><strong>{{ 'sections.contact.hours' | t }}:</strong> 10:00–20:00 Tashkent time</p>
+<div class="contact-page">
+  <div class="contact-layout">
+    <div class="contact-form-wrapper">
+      <h2>{{ 'sections.contact.title' | t }}</h2>
+      {% form 'contact' %}
+        {% if form.posted_successfully? %}
+          <p class="form-success">{{ 'sections.contact.success' | t }}</p>
+        {% endif %}
+        
+        <div class="form-group">
+          <label class="form-label" for="contact-name">{{ 'sections.contact.name' | t }}</label>
+          <input type="text" id="contact-name" name="contact[name]" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="contact-email">{{ 'sections.contact.email' | t }}</label>
+          <input type="email" id="contact-email" name="contact[email]" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="contact-message">{{ 'sections.contact.message' | t }}</label>
+          <textarea id="contact-message" name="contact[body]" class="form-textarea" required></textarea>
+        </div>
+        
+        <button type="submit" class="btn-gold">{{ 'sections.contact.send' | t }}</button>
+      {% endform %}
+    </div>
+    
+    <div class="contact-info">
+      <h2>{{ 'sections.contact.info' | t }}</h2>
+      <p><strong>{{ 'sections.contact.address' | t }}</strong></p>
+      <p>Tashkent, Uzbekistan</p>
+      <p><strong>{{ 'sections.contact.email' | t }}:</strong> hello@w8stshop.com</p>
+      <p><strong>{{ 'sections.contact.hours' | t }}:</strong> Mon-Sat: 10:00-20:00</p>
+      
+      <div class="social-links">
+        <a href="https://instagram.com/w8stshop" class="social-link">Instagram</a>
+        <a href="https://t.me/w8stshop" class="social-link">Telegram</a>
       </div>
     </div>
-
-    <form class="contact-form" action="/contact#contact-form" method="post">
-      <label for="ContactName">{{ 'sections.contact.name' | t }}</label>
-      <input id="ContactName" name="contact[name]" type="text" autocomplete="name" required>
-
-      <label for="ContactEmail">{{ 'sections.contact.email' | t }}</label>
-      <input id="ContactEmail" name="contact[email]" type="email" autocomplete="email" required>
-
-      <label for="ContactPhone">{{ 'sections.contact.phone' | t }}</label>
-      <input id="ContactPhone" name="contact[phone]" type="tel" autocomplete="tel">
-
-      <label for="ContactMessage">{{ 'sections.contact.message' | t }}</label>
-      <textarea id="ContactMessage" name="contact[body]" rows="6" required></textarea>
-
-      <button class="button button--gold button--full" type="submit">{{ 'sections.contact.send' | t }}</button>
-    </form>
   </div>
-</section>
+</div>
 
 {% schema %}
 {
-  "name": "Contact form",
-  "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Talk to us" },
-    { "type": "text", "id": "title", "label": "Title", "default": "Contact W8st Shop" },
-    { "type": "textarea", "id": "description", "label": "Description", "default": "Questions about sizing, delivery, returns, or custom orders? Send us a message." }
-  ],
-  "presets": [{ "name": "Contact form" }]
+  "name": "Contact Form",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Contact Form"
+    }
+  ]
 }
 {% endschema %}
-
-{% stylesheet %}
-.contact-section {
-  background: var(--color-background);
-}
-
-.contact-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(320px, 0.7fr);
-  gap: 42px;
-  align-items: start;
-}
-
-.contact-grid h1 {
-  margin: 0;
-  font-size: clamp(2.8rem, 8vw, 6rem);
-  line-height: 0.95;
-  letter-spacing: -0.08em;
-  text-transform: uppercase;
-}
-
-.contact-grid > div > p:not(.eyebrow) {
-  color: var(--color-muted);
-}
-
-.contact-details {
-  display: grid;
-  gap: 12px;
-  margin-top: 28px;
-}
-
-.contact-form {
-  display: grid;
-  gap: 14px;
-  padding: 24px;
-  border: 1px solid rgba(245, 230, 200, 0.12);
-  border-radius: var(--radius-lg);
-  background: rgba(245, 230, 200, 0.05);
-}
-
-.contact-form label {
-  font-size: 0.82rem;
-  font-weight: 950;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
-  border: 1px solid rgba(245, 230, 200, 0.16);
-  border-radius: 14px;
-  background: rgba(15, 10, 5, 0.55);
-  color: var(--color-text);
-  padding: 14px;
-  font: inherit;
-}
-
-.contact-form textarea {
-  resize: vertical;
-}
-
-@media (max-width: 820px) {
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-}
-{% endstylesheet %}
