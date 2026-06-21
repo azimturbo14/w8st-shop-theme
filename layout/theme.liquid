@@ -10,7 +10,8 @@
     <meta name="description" content="{{ page_description | escape }}">
   {% endif %}
   {{ content_for_header }}
-  {{ 'theme.css.liquid' | asset_url | stylesheet_tag }}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {{ 'theme.js' | asset_url | script_tag }}
 </head>
 
 <body class="template-{{ template.name }}">
@@ -27,6 +28,5 @@
   {% render 'cart-drawer' %}
   {% render 'size-guide-modal' %}
   <script>window.shopMoneyFormat = {{ shop.money_format | json }};</script>
-  {{ 'theme.js.liquid' | asset_url | script_tag }}
 </body>
 </html>

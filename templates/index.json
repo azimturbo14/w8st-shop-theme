@@ -1,5 +1,9 @@
 {
   "sections": {
+    "header": {
+      "type": "header",
+      "settings": {}
+    },
     "hero": {
       "type": "hero-banner",
       "settings": {
@@ -12,16 +16,30 @@
         "secondary_button_url": "/collections/all"
       }
     },
-    "all-products": {
-      "type": "all-products",
+    "ticker": {
+      "type": "scrolling-ticker",
       "settings": {
-        "eyebrow": "Shop W8st",
-        "title": "All products",
-        "description": "Real products from your Shopify store. Use the filters to sort by category.",
-        "empty_title": "No products yet",
-        "empty_text": "Add products in Shopify Admin and they will appear here automatically."
+        "text": "Free delivery across Tashkent over 500 000 UZS • New drops every week • Quality streetwear"
       }
+    },
+    "category-grid": {
+      "type": "category-grid",
+      "settings": {
+        "eyebrow": "Shop by category",
+        "title": "Browse categories"
+      }
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "Featured",
+        "title": "New arrivals"
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
     }
   },
-  "order": ["hero", "all-products"]
+  "order": ["header", "hero", "ticker", "category-grid", "featured-products", "footer"]
 }
