@@ -1,0 +1,33 @@
+<header class="header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      {{ 'logo.png' | asset_url | img_tag: shop.name }}
+    </a>
+    <button class="hamburger" id="hamburger">☰</button>
+    <nav class="nav" id="nav">
+      <a href="/collections/new-arrivals">{{ 'sections.header.new' | t }}</a>
+      <a href="/collections/clothing">{{ 'sections.header.clothes' | t }}</a>
+      <a href="/collections/sportswear">{{ 'sections.header.sport' | t }}</a>
+      <a href="/collections/sale">{{ 'sections.header.sale' | t }}</a>
+      <a href="/pages/about">{{ 'sections.header.about' | t }}</a>
+      <a href="/pages/contact">{{ 'sections.header.contact' | t }}</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang">
+        <a href="?locale=en">EN</a> /
+        <a href="?locale=uz">UZ</a> /
+        <a href="?locale=ru">RU</a>
+      </div>
+      <button class="cart-btn" data-open-cart>
+        {{ 'sections.header.cart' | t }} (<span data-cart-count>{{ cart.item_count }}</span>)
+      </button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}

@@ -1,28 +1,24 @@
 ```
-# Shopify theme specific ignores
-.shopify/
-.sass-cache/
-*.scss~
-*.liquid~
+# Jekyll/Liquid specific
+.snippets/
+_includes/
 
 # Dependencies
 node_modules/
+vendor/bundle/
+.jekyll-cache/
 
 # Logs and temp files
 *.log
 *.tmp
-*.swp
 
 # Environment
 .env
 .env.local
-.env.*
+*.env.*
 
 # Editors
 .vscode/
 .idea/
-
-# OS generated files
-.DS_Store
-Thumbs.db
+*.swp
 ```
