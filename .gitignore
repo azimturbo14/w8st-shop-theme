@@ -1,22 +1,7 @@
 ```
-# Shopify/Liquid templates related build artifacts
-*.liquid.cache
-*.liquid.log
+# Compressed files
+*.zip
 
-# General build artifacts
-build/
-dist/
+# Logs and temp files
 *.tmp
-
-# Environment
-.env
-.env.local
-*.env.*
-
-# Editors
-.vscode/
-.idea/
-
-# Logs
-*.log
 ```

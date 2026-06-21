@@ -40,10 +40,13 @@ textarea {
   font: inherit;
 }
 
-img,
-svg {
+img {
   display: block;
   max-width: 100%;
+}
+
+svg:not([class*="icon"]):not([class*="logo"]):not([class*="cart"]):not([class*="search"]):not([class*="menu"]):not([class*="close"]) {
+  display: none;
 }
 
 a {
