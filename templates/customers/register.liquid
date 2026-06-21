@@ -1,0 +1,224 @@
+{%- comment -%}
+  Register template for new customer accounts
+{%- endcomment -%}
+
+<div class="customer-register-page">
+  <div class="container">
+    <div class="register-form-wrapper">
+      <h1>{{ 'customer.register.title' | t }}</h1>
+      
+      {%- form 'create_customer' -%}
+        {%- if form.errors -%}
+          <div class="form-errors">
+            <h2>{{ 'general.password_page.login_form_error' | t }}</h2>
+            <ul>
+              {%- for field in form.errors -%}
+                <li>
+                  {%- if field == 'form' -%}
+                    {{ form.errors.messages[field] }}
+                  {%- else -%}
+                    <a href="#{{ field }}">
+                      {{ form.errors.messages[field] }}
+                    </a>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="form-field">
+          <label for="first_name">{{ 'customer.register.first_name' | t }}</label>
+          <input 
+            type="text" 
+            name="customer[first_name]" 
+            id="first_name" 
+            class="{% if form.errors contains 'first_name' %}error{% endif %}"
+            autocomplete="given-name"
+            autofocus
+          >
+        </div>
+
+        <div class="form-field">
+          <label for="last_name">{{ 'customer.register.last_name' | t }}</label>
+          <input 
+            type="text" 
+            name="customer[last_name]" 
+            id="last_name" 
+            class="{% if form.errors contains 'last_name' %}error{% endif %}"
+            autocomplete="family-name"
+          >
+        </div>
+
+        <div class="form-field">
+          <label for="email">{{ 'customer.register.email' | t }}</label>
+          <input 
+            type="email" 
+            name="customer[email]" 
+            id="email" 
+            class="{% if form.errors contains 'email' %}error{% endif %}"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+          >
+        </div>
+
+        <div class="form-field">
+          <label for="password">{{ 'customer.register.password' | t }}</label>
+          <input 
+            type="password" 
+            name="customer[password]" 
+            id="password" 
+            class="{% if form.errors contains 'password' %}error{% endif %}"
+            autocomplete="new-password"
+          >
+        </div>
+
+        <button type="submit" class="button button--primary">
+          {{ 'customer.register.submit' | t }}
+        </button>
+
+        <div class="login-links">
+          <span>{{ 'customer.register.already_have_account' | default: "Already have an account?" }}</span>
+          <a href="{{ routes.account_login_url }}">{{ 'customer.register.sign_in' | default: "Sign in" }}</a>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+.customer-register-page {
+  padding: 60px 0;
+  min-height: calc(100vh - 300px);
+  display: flex;
+  align-items: center;
+}
+
+.register-form-wrapper {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 40px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.register-form-wrapper h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: var(--color-text);
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.form-field input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(245, 230, 200, 0.2);
+  border-radius: var(--radius-md);
+  background: var(--color-background);
+  color: var(--color-text);
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-field input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.form-field input.error {
+  border-color: #ff6b6b;
+}
+
+.form-errors {
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid #ff6b6b;
+  border-radius: var(--radius-md);
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.form-errors h2 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #ff6b6b;
+}
+
+.form-errors ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.form-errors li {
+  margin-bottom: 5px;
+}
+
+.form-errors a {
+  color: #ff6b6b;
+  text-decoration: underline;
+}
+
+.button--primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.button--primary:hover {
+  opacity: 0.9;
+}
+
+.login-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.login-links a {
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.login-links a:hover {
+  color: var(--color-accent);
+}
+
+@media (max-width: 560px) {
+  .customer-register-page {
+    padding: 30px 0;
+  }
+
+  .register-form-wrapper {
+    padding: 25px;
+  }
+
+  .login-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+{% endstylesheet %}

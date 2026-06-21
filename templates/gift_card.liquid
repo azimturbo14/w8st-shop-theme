@@ -1,0 +1,91 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ shop.name }} - Gift Card</title>
+  {{ 'theme.css.liquid' | asset_url | stylesheet_tag }}
+  <style>
+    .gift-card-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-background);
+      padding: 40px 20px;
+    }
+    .gift-card-container {
+      max-width: 500px;
+      width: 100%;
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .gift-card-container h1 {
+      color: var(--color-text);
+      margin-bottom: 10px;
+    }
+    .gift-card-code {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--color-accent);
+      padding: 20px;
+      background: rgba(232, 184, 75, 0.1);
+      border-radius: var(--radius-md);
+      margin: 20px 0;
+      word-break: break-all;
+    }
+    .gift-card-balance {
+      font-size: 2rem;
+      color: var(--color-text);
+      margin-bottom: 20px;
+    }
+    .gift-card-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .qr-code {
+      margin: 20px auto;
+      max-width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="gift-card-page">
+    <div class="gift-card-container">
+      <p class="eyebrow">{{ shop.name }}</p>
+      <h1>Gift Card</h1>
+      <div class="gift-card-balance">{{ initial_value | money }}</div>
+      
+      {% if gift_card.expired or gift_card.enabled != true %}
+        <p>This gift card has expired.</p>
+      {% endif %}
+      
+      {% if gift_card.balance == 0 %}
+        <p>This gift card has been fully used.</p>
+      {% endif %}
+      
+      <div class="gift-card-code">
+        {{ gift_card.code | format_code }}
+      </div>
+      
+      {% if gift_card.qr_identifier %}
+        <div class="qr-code">
+          {{ gift_card.qr_identifier | image_tag: class: 'qr-code__image' }}
+        </div>
+      {% endif %}
+      
+      <div class="gift-card-actions">
+        <a href="{{ shop.url }}" class="button button--primary">Continue Shopping</a>
+        <button onclick="window.print()" class="button button--outline">Print</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

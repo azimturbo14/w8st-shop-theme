@@ -1,0 +1,151 @@
+{%- comment -%}
+  Customer account template
+{%- endcomment -%}
+
+<div class="customer-account-page">
+  <div class="container">
+    <div class="account-header">
+      <h1>{{ 'customer.account.title' | t }}</h1>
+      <a href="{{ routes.account_logout_url }}" class="button button--outline">{{ 'customer.account.logout' | t }}</a>
+    </div>
+
+    <div class="account-content">
+      <div class="account-details">
+        <h2>{{ 'customer.account.details' | t }}</h2>
+        <p><strong>{{ customer.name }}</strong></p>
+        <p>{{ customer.email }}</p>
+        <a href="{{ routes.account_addresses_url }}" class="link">{{ 'customer.account.view_addresses' | default: "Manage addresses" }}</a>
+      </div>
+
+      <div class="account-orders">
+        <h2>{{ 'customer.account.orders' | t }}</h2>
+        {%- if customer.orders.size > 0 -%}
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>{{ 'customer.order.number' | t }}</th>
+                <th>{{ 'customer.order.date' | t }}</th>
+                <th>{{ 'customer.order.total' | t }}</th>
+                <th>{{ 'customer.order.status' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: "%B %d, %Y" }}</td>
+                  <td>{{ order.total_price | money }}</td>
+                  <td>{{ order.financial_status_label }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        {%- else -%}
+          <p class="empty-state-text">{{ 'customer.account.no_orders' | default: "You haven't placed any orders yet." }}</p>
+          <a href="{{ routes.collections_url }}" class="button button--primary">{{ 'customer.account.continue_shopping' | default: "Continue shopping" }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+.customer-account-page {
+  padding: 60px 0;
+}
+
+.account-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.account-header h1 {
+  font-size: 2.5rem;
+  color: var(--color-text);
+}
+
+.account-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+}
+
+.account-details,
+.account-orders {
+  background: var(--color-surface);
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.account-details h2,
+.account-orders h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: var(--color-text);
+}
+
+.account-details p {
+  margin-bottom: 10px;
+  color: var(--color-muted);
+}
+
+.account-details .link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid rgba(245, 230, 200, 0.1);
+}
+
+.orders-table th {
+  color: var(--color-muted);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.orders-table a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.empty-state-text {
+  color: var(--color-muted);
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .account-content {
+    grid-template-columns: 1fr;
+  }
+
+  .account-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .orders-table {
+    font-size: 0.85rem;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 10px 5px;
+  }
+}
+{% endstylesheet %}
