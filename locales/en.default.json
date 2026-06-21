@@ -48,8 +48,11 @@
     },
     "categories": {
       "streetwear": "Streetwear",
+      "streetwear_desc": "Urban style for everyday wear",
       "sportswear": "Sportswear",
-      "accessories": "Accessories"
+      "sportswear_desc": "Performance gear for athletes",
+      "accessories": "Accessories",
+      "accessories_desc": "Complete your look"
     },
     "featured": {
       "title": "New Arrivals"
@@ -63,8 +66,11 @@
     },
     "trust": {
       "free_shipping": "Free Shipping",
+      "free_shipping_desc": "On orders over $50",
       "easy_returns": "Easy Returns",
-      "quality": "Quality Guaranteed"
+      "easy_returns_desc": "30-day return policy",
+      "quality": "Quality Guaranteed",
+      "quality_desc": "Premium materials only"
     },
     "footer": {
       "shop": "Shop",
@@ -107,7 +113,13 @@
     },
     "about": {
       "title": "About W8st Shop",
-      "story": "Our Story"
+      "story": "Our Story",
+      "quality": "Premium Quality",
+      "quality_desc": "We use only the finest materials",
+      "style": "Modern Style",
+      "style_desc": "Designed for the modern athlete",
+      "community": "Community First",
+      "community_desc": "Built by and for our community"
     }
   }
 }

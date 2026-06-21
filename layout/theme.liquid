@@ -10,7 +10,11 @@
 <body>
   {% render 'header' %}
   <main id="main">
-    {{ content_for_layout }}
+    {% if template == 'index' %}
+      {{ content_for_index }}
+    {% else %}
+      {{ content_for_layout }}
+    {% endif %}
   </main>
   {% render 'cart-drawer' %}
   {{ 'theme.js' | asset_url | script_tag }}

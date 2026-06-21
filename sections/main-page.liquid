@@ -1,25 +1,11 @@
-<div class="about-page">
-  <div class="about-hero">
-    <h1>{{ page.title }}</h1>
-  </div>
-  <div class="about-content">
-    {{ page.content }}
-  </div>
-  
-  <div class="features-grid">
-    <div class="feature-box">
-      <h3>{{ 'pages.about.quality' | t }}</h3>
-      <p>{{ 'pages.about.quality_desc' | t }}</p>
-    </div>
-    <div class="feature-box">
-      <h3>{{ 'pages.about.style' | t }}</h3>
-      <p>{{ 'pages.about.style_desc' | t }}</p>
-    </div>
-    <div class="feature-box">
-      <h3>{{ 'pages.about.community' | t }}</h3>
-      <p>{{ 'pages.about.community_desc' | t }}</p>
-    </div>
-  </div>
+{% comment %}
+  Main Page Section - Used for homepage and static pages
+  On homepage, this acts as a wrapper that allows other sections to render
+{% endcomment %}
+
+{% comment %} Homepage sections are rendered via index.json {% endcomment %}
+<div class="homepage-content">
+  {% comment %} This div wraps homepage content {% endcomment %}
 </div>
 
 {% schema %}
