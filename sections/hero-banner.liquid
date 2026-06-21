@@ -1,4 +1,4 @@
-<section class="hero-section section">
+<section class="hero-section section{% if section.settings.image != blank %} hero-section--with-image{% endif %}">
   <div class="container hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">{{ section.settings.eyebrow }}</p>
@@ -9,18 +9,13 @@
         <a class="button button--outline" href="{{ section.settings.secondary_button_url }}">{{ section.settings.secondary_button_label }}</a>
       </div>
     </div>
-    <div class="hero-card" aria-label="{{ section.settings.heading }}">
-      <div class="hero-card__image">
-        {% if section.settings.image != blank %}
+    {% if section.settings.image != blank %}
+      <div class="hero-card" aria-label="{{ section.settings.heading }}">
+        <div class="hero-card__image">
           <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.image.alt | default: section.settings.heading }}" width="620" height="720" loading="eager">
-        {% else %}
-          <div class="hero-placeholder">
-            <span>W8ST</span>
-            <strong>{{ settings.tagline }}</strong>
-          </div>
-        {% endif %}
+        </div>
       </div>
-    </div>
+    {% endif %}
   </div>
 </section>
 
@@ -54,6 +49,11 @@
   grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.85fr);
   gap: clamp(28px, 5vw, 72px);
   align-items: center;
+}
+
+.hero-section:not(.hero-section--with-image) .hero-grid {
+  grid-template-columns: 1fr;
+  max-width: 860px;
 }
 
 .hero-copy h1 {

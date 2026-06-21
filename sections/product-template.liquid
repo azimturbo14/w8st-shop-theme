@@ -42,7 +42,7 @@
                   {%- for value in option.values -%}
                     {%- assign input_id = 'Option-' | append: option_index | append: '-' | append: forloop.index0 | append: '-' | append: product.id -%}
                     {%- assign option_image = product.featured_media -%}
-                    {%- assign option_media_id = '' -%}
+                    {%- assign option_media_id = product.featured_media.id -%}
                     {%- assign option_available = false -%}
                     {%- for variant in product.variants -%}
                       {%- if variant.options[option_index] == value -%}
@@ -51,7 +51,7 @@
                         {%- endif -%}
                         {%- if option_image == product.featured_media -%}
                           {%- assign option_image = variant.featured_media | default: variant.image | default: product.featured_media -%}
-                          {%- assign option_media_id = variant.featured_media.id | default: variant.image.id | default: product.featured_media.id -%}
+                          {%- assign option_media_id = option_image.id -%}
                         {%- endif -%}
                       {%- endif -%}
                     {%- endfor -%}

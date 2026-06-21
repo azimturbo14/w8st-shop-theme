@@ -1,0 +1,96 @@
+<section class="section all-products-section" id="all-products">
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.description }}</p>
+    </div>
+
+    <div class="product-filters" aria-label="{{ section.settings.filter_label }}">
+      <button class="button button--outline is-active" type="button" data-product-filter="all" aria-pressed="true">All</button>
+      <button class="button button--outline" type="button" data-product-filter="shoes" aria-pressed="false">Shoes</button>
+      <button class="button button--outline" type="button" data-product-filter="backpacks" aria-pressed="false">Backpacks</button>
+      <button class="button button--outline" type="button" data-product-filter="clothes" aria-pressed="false">Clothes</button>
+      <button class="button button--outline" type="button" data-product-filter="sportswear" aria-pressed="false">Sportswear</button>
+      <button class="button button--outline" type="button" data-product-filter="streetwear" aria-pressed="false">Streetwear</button>
+    </div>
+
+    {%- if collections.all.products_count > 0 -%}
+      <div class="product-grid" data-product-grid>
+        {%- for product in collections.all.products -%}
+          {% render 'product-card', product: product, show_button: true %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="empty-state">
+        <h2>{{ section.settings.empty_title }}</h2>
+        <p>{{ section.settings.empty_text }}</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "All products",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop W8st" },
+    { "type": "text", "id": "title", "label": "Title", "default": "All products" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Real products from your Shopify store. Filter by category when you add product types or tags." },
+    { "type": "text", "id": "filter_label", "label": "Filter label", "default": "Product filters" },
+    { "type": "text", "id": "empty_title", "label": "Empty title", "default": "No products yet" },
+    { "type": "textarea", "id": "empty_text", "label": "Empty text", "default": "Add products in Shopify Admin and they will appear here automatically." }
+  ],
+  "presets": [{ "name": "All products" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.all-products-section {
+  background: var(--color-background);
+}
+
+.product-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 28px;
+}
+
+.product-filters .button {
+  min-height: 44px;
+  padding: 10px 16px;
+}
+
+.product-filters .is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.all-products-section .product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.all-products-section [hidden] {
+  display: none !important;
+}
+
+@media (max-width: 1080px) {
+  .all-products-section .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .all-products-section .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-filters .button {
+    flex: 1 1 calc(50% - 10px);
+  }
+}
+{% endstylesheet %}

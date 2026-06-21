@@ -1,38 +1,27 @@
 {
   "sections": {
-    "hero": { "type": "hero-banner", "settings": { "eyebrow": "Streetwear essentials", "heading": "Wear the streets. Own the game.", "subheading": "Clean urban fits, performance sportswear, and everyday essentials for your next move.", "primary_button_label": "Shop the collection", "primary_button_url": "/collections/all", "secondary_button_label": "New arrivals", "secondary_button_url": "/collections/new-arrivals" } },
-    "ticker": { "type": "scrolling-ticker", "settings": { "text": "FREE TASHKENT DELIVERY • SAME DAY PICKUP • NEW DROPS EVERY FRIDAY • " } },
-    "categories": {
-      "type": "category-grid",
-      "blocks": {
-        "clothing": { "type": "category", "settings": { "title": "Clothing", "url": "/collections/clothing", "button_label": "Shop clothing" } },
-        "sportswear": { "type": "category", "settings": { "title": "Sportswear", "url": "/collections/sportswear", "button_label": "Shop sportswear" } },
-        "accessories": { "type": "category", "settings": { "title": "Accessories", "url": "/collections/accessories", "button_label": "Shop accessories" } }
-      },
-      "block_order": ["clothing", "sportswear", "accessories"]
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "W8st Shop",
+        "heading": "Wear the streets. Own the game.",
+        "subheading": "Streetwear, sportswear, shoes, backpacks, and everyday essentials from Tashkent.",
+        "primary_button_label": "Shop all products",
+        "primary_button_url": "/collections/all",
+        "secondary_button_label": "All products",
+        "secondary_button_url": "/collections/all"
+      }
     },
-    "featured": { "type": "featured-products", "settings": { "eyebrow": "Featured", "title": "Fresh drops", "description": "Add a collection in Shopify and this section will show your real products automatically.", "products_to_show": 4, "collection": "all" } },
-    "sport": { "type": "sport-collection", "settings": { "eyebrow": "Performance", "title": "Sport collection", "description": "Use your Shopify collections to show training and active pieces here.", "button_label": "Shop sportswear", "button_url": "/collections/sportswear" } },
-    "promo": { "type": "promo-banner", "settings": { "eyebrow": "Limited offer", "title": "Weekend drop sale", "text": "Edit this message in the theme editor when you are ready to run a promotion.", "button_label": "Shop sale", "button_url": "/collections/sale" } },
-    "lookbook": {
-      "type": "lookbook",
-      "blocks": {
-        "look1": { "type": "image", "settings": { "title": "Look 1" } },
-        "look2": { "type": "image", "settings": { "title": "Look 2" } },
-        "look3": { "type": "image", "settings": { "title": "Look 3" } },
-        "look4": { "type": "image", "settings": { "title": "Look 4" } }
-      },
-      "block_order": ["look1", "look2", "look3", "look4"]
-    },
-    "trust": {
-      "type": "trust-badges",
-      "blocks": {
-        "shipping": { "type": "badge", "settings": { "icon": "🚚", "title": "Free shipping", "text": "Free delivery across Tashkent over your chosen threshold." } },
-        "returns": { "type": "badge", "settings": { "icon": "↩️", "title": "Easy returns", "text": "Simple returns if the fit is not right." } },
-        "quality": { "type": "badge", "settings": { "icon": "✓", "title": "Quality guaranteed", "text": "Checked before dispatch for clean finishing." } }
-      },
-      "block_order": ["shipping", "returns", "quality"]
+    "all-products": {
+      "type": "all-products",
+      "settings": {
+        "eyebrow": "Shop W8st",
+        "title": "All products",
+        "description": "Real products from your Shopify store. Use the filters to sort by category.",
+        "empty_title": "No products yet",
+        "empty_text": "Add products in Shopify Admin and they will appear here automatically."
+      }
     }
   },
-  "order": ["hero", "ticker", "categories", "featured", "sport", "promo", "lookbook", "trust"]
+  "order": ["hero", "all-products"]
 }
