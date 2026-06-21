@@ -1,222 +1,53 @@
-<section class="section cart-page">
-  <div class="container cart-layout">
-    <div>
-      <div class="section-heading">
-        <p class="eyebrow">{{ 'cart.page.eyebrow' | t }}</p>
-        <h1>{{ 'cart.page.title' | t }}</h1>
-      </div>
-
-      {%- if cart.item_count > 0 -%}
-        <form class="cart-items" action="/cart" method="post" novalidate>
-          {%- for item in cart.items -%}
-            <article class="cart-line" data-cart-line-item data-line="{{ forloop.index }}">
-              <div class="cart-line__image">
-                {%- if item.image -%}
-                  <img src="{{ item.image | image_url: width: 300 }}" alt="{{ item.title | escape }}" width="180" height="220" loading="lazy">
-                {%- else -%}
-                  <span>W8ST</span>
-                {%- endif -%}
-              </div>
-              <div class="cart-line__details">
-                <h2>{{ item.product.title }}</h2>
-                <p>{{ item.variant.title }}</p>
-                <strong>{{ item.line_price | money }}</strong>
-                <div class="quantity-control" aria-label="{{ 'cart.page.quantity' | t }}">
-                  <button type="button" data-cart-qty data-line="{{ forloop.index }}" data-qty="-1" aria-label="{{ 'cart.page.decrease' | t }}">−</button>
-                  <input name="updates[]" value="{{ item.quantity }}" inputmode="numeric" min="0" data-cart-line="{{ forloop.index }}">
-                  <button type="button" data-cart-qty data-line="{{ forloop.index }}" data-qty="1" aria-label="{{ 'cart.page.increase' | t }}">+</button>
-                </div>
-                <a href="{{ item.url_to_remove }}" data-remove-line data-line="{{ forloop.index }}">{{ 'cart.page.remove' | t }}</a>
-              </div>
-            </article>
-          {%- endfor -%}
-        </form>
-      {%- else -%}
-        <div class="empty-state">
-          <h2>{{ 'cart.page.empty_title' | t }}</h2>
-          <p>{{ 'cart.page.empty_text' | t }}</p>
-          <a class="button button--gold" href="/collections/all">{{ 'cart.page.continue_shopping' | t }}</a>
+<div class="cart-template">
+  <div class="cart-page">
+    <h1 class="cart-page-title">{{ 'sections.cart.title' | t }}</h1>
+    
+    {% if cart.item_count > 0 %}
+    <div class="cart-layout">
+      <div class="cart-items-list">
+        {% for item in cart.items %}
+        <div class="cart-item">
+          <div class="cart-item-image">
+            <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title }}">
+          </div>
+          <div class="cart-item-details">
+            <h3 class="cart-item-name">{{ item.product.title }}</h3>
+            <p class="cart-item-variant">{{ item.variant.title }}</p>
+            <p class="cart-item-price">{{ item.final_line_price | money }}</p>
+            <div class="cart-item-quantity">
+              <button class="qty-btn" onclick="updateCartItem({{ item.key }}, {{ item.quantity | minus: 1 }})">-</button>
+              <span>{{ item.quantity }}</span>
+              <button class="qty-btn" onclick="updateCartItem({{ item.key }}, {{ item.quantity | plus: 1 }})">+</button>
+              <button class="cart-item-remove" onclick="removeCartItem({{ item.key }})">{{ 'sections.cart.remove' | t }}</button>
+            </div>
+          </div>
         </div>
-      {%- endif -%}
-    </div>
-
-    <aside class="order-summary">
-      <h2>{{ 'cart.page.order_summary' | t }}</h2>
-      <div data-free-shipping></div>
-      <div class="order-summary__row">
-        <span>{{ 'cart.page.subtotal' | t }}</span>
-        <strong>{{ cart.total_price | money }}</strong>
+        {% endfor %}
       </div>
-      <p>{{ 'cart.page.taxes_note' | t }}</p>
-      <a class="button button--gold button--full" href="/checkout">{{ 'cart.page.checkout' | t }}</a>
-      <a class="continue-shopping" href="/collections/all">{{ 'cart.page.continue_shopping' | t }} &rarr;</a>
-    </aside>
+      
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>{{ 'sections.cart.subtotal' | t }}</span>
+          <span class="summary-total">{{ cart.total_price | money }}</span>
+        </div>
+        <p class="shipping-note">{{ 'sections.cart.shipping_note' | t }}</p>
+        <a href="/checkout" class="cart-checkout-btn">{{ 'sections.cart.checkout' | t }}</a>
+        <a href="/collections/all" class="cart-continue">{{ 'sections.cart.continue_shopping' | t }}</a>
+      </div>
+    </div>
+    {% else %}
+    <div class="no-results">
+      <p>{{ 'sections.cart.empty' | t }}</p>
+      <a href="/collections/all" class="btn-gold" style="display: inline-block; margin-top: 1rem;">{{ 'sections.cart.continue_shopping' | t }}</a>
+    </div>
+    {% endif %}
   </div>
-</section>
+</div>
 
 {% schema %}
 {
-  "name": "Cart page",
+  "name": "Cart Template",
   "settings": [],
-  "presets": [{ "name": "Cart page" }]
+  "templates": ["cart"]
 }
 {% endschema %}
-
-{% stylesheet %}
-.cart-page {
-  background: var(--color-background);
-}
-
-.cart-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.38fr);
-  gap: 34px;
-  align-items: start;
-}
-
-.cart-items {
-  display: grid;
-  gap: 16px;
-}
-
-.cart-line {
-  display: grid;
-  grid-template-columns: 128px 1fr;
-  gap: 18px;
-  padding: 16px;
-  border: 1px solid rgba(245, 230, 200, 0.12);
-  border-radius: var(--radius-md);
-  background: rgba(245, 230, 200, 0.05);
-}
-
-.cart-line__image {
-  aspect-ratio: 1 / 1.2;
-  overflow: hidden;
-  border-radius: 14px;
-  background: rgba(245, 230, 200, 0.06);
-}
-
-.cart-line__image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.cart-line__image span {
-  display: grid;
-  min-height: 160px;
-  place-items: center;
-  color: rgba(232, 184, 75, 0.45);
-  font-weight: 1000;
-}
-
-.cart-line__details {
-  display: grid;
-  gap: 10px;
-}
-
-.cart-line h2 {
-  margin: 0;
-  font-size: 1rem;
-  text-transform: uppercase;
-}
-
-.cart-line p,
-.cart-line a {
-  color: var(--color-muted);
-}
-
-.cart-line a[data-remove-line] {
-  display: inline-block;
-  min-height: 44px;
-  line-height: 44px;
-  padding: 0 8px;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.cart-line a[data-remove-line]:hover,
-.cart-line a[data-remove-line]:focus-visible {
-  color: var(--color-accent);
-}
-
-.cart-line strong {
-  color: var(--color-accent);
-}
-
-.quantity-control {
-  display: inline-grid;
-  grid-template-columns: 44px 58px 44px;
-  width: max-content;
-  overflow: hidden;
-  border: 1px solid rgba(245, 230, 200, 0.16);
-  border-radius: 999px;
-}
-
-.quantity-control button {
-  min-width: 44px;
-  min-height: 44px;
-  border: 0;
-  background: transparent;
-  color: var(--color-text);
-  font-size: 1.2rem;
-}
-
-.quantity-control input {
-  width: 58px;
-  border: 0;
-  border-left: 1px solid rgba(245, 230, 200, 0.12);
-  border-right: 1px solid rgba(245, 230, 200, 0.12);
-  background: transparent;
-  color: var(--color-text);
-  text-align: center;
-}
-
-.order-summary {
-  position: sticky;
-  top: 96px;
-  padding: 22px;
-  border-radius: var(--radius-lg);
-  background: rgba(245, 230, 200, 0.06);
-  border: 1px solid rgba(245, 230, 200, 0.12);
-}
-
-.order-summary h2 {
-  margin: 0 0 16px;
-}
-
-.order-summary__row {
-  display: flex;
-  justify-content: space-between;
-  margin: 12px 0;
-  font-size: 1.1rem;
-}
-
-.order-summary p {
-  color: var(--color-muted);
-  font-size: 0.9rem;
-}
-
-.continue-shopping {
-  display: block;
-  margin-top: 12px;
-  color: var(--color-muted);
-  text-align: center;
-}
-
-@media (max-width: 860px) {
-  .cart-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .order-summary {
-    position: static;
-  }
-}
-
-@media (max-width: 560px) {
-  .cart-line {
-    grid-template-columns: 96px 1fr;
-  }
-}
-{% endstylesheet %}

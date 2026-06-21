@@ -1,60 +1,43 @@
-<section class="section product-section">
-  <div class="container">
-    <div class="section-heading">
-      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
-      <h2>{{ section.settings.title }}</h2>
-      <p>{{ section.settings.description }}</p>
-    </div>
-
-    <div class="product-grid" data-product-grid>
-      {%- assign featured_collection = section.settings.collection | default: collections.all -%}
-      {%- if featured_collection.products_count > 0 -%}
-        {%- for product in featured_collection.products limit: section.settings.products_to_show -%}
-          {% render 'product-card', product: product, show_button: true %}
-        {%- endfor -%}
-      {%- else -%}
-        {%- for i in (1..4) -%}
-          {% render 'product-card', product: null %}
-        {%- endfor -%}
-      {%- endif -%}
-    </div>
+<section class="featured-products-section">
+  <h2 class="section-title">{{ section.settings.title }}</h2>
+  <div class="product-grid">
+    {% assign collection = collections[section.settings.collection] %}
+    {% for product in collection.products limit: section.settings.products_to_show %}
+      {% render 'product-card', product: product %}
+    {% endfor %}
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Featured products",
+  "name": "Featured Products",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New arrivals" },
-    { "type": "text", "id": "title", "label": "Title", "default": "Fresh drops" },
-    { "type": "textarea", "id": "description", "label": "Description", "default": "Add a collection in Shopify and this section will show your real products automatically." },
-    { "type": "collection", "id": "collection", "label": "Collection" },
-    { "type": "range", "id": "products_to_show", "min": 2, "max": 8, "step": 1, "label": "Products", "default": 4 }
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "New Arrivals"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "default": "all"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Products to Show",
+      "default": 4
+    }
   ],
-  "presets": [{ "name": "Featured products" }]
+  "presets": [
+    {
+      "name": "Featured Products"
+    }
+  ]
 }
 {% endschema %}
-
-{% stylesheet %}
-.product-section {
-  background: linear-gradient(180deg, var(--color-background), #120b05);
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
-}
-
-@media (max-width: 1080px) {
-  .product-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 560px) {
-  .product-grid {
-    grid-template-columns: 1fr;
-  }
-}
-{% endstylesheet %}

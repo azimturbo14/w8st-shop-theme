@@ -1,27 +1,26 @@
-<div class="cart-drawer" id="CartDrawer" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="CartDrawerTitle">
-  <div class="cart-drawer__backdrop" data-close-cart></div>
-  <aside class="cart-drawer__panel" tabindex="-1">
-    <div class="cart-drawer__header">
-      <div>
-        <p class="eyebrow">{{ 'cart.drawer.eyebrow' | t }}</p>
-        <h2 id="CartDrawerTitle">{{ 'cart.drawer.title' | t }}</h2>
-      </div>
-      <button class="icon-button" type="button" data-close-cart aria-label="{{ 'cart.drawer.close' | t }}">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-      </button>
+<div class="cart-drawer-overlay"></div>
+<div class="cart-drawer">
+  <div class="cart-drawer-header">
+    <h2>{{ 'sections.cart.title' | t }}</h2>
+    <button class="cart-close" aria-label="{{ 'sections.cart.close' | t }}">✕</button>
+  </div>
+  <div class="cart-items">
+    <!-- Cart items will be loaded dynamically -->
+  </div>
+  <div class="cart-footer">
+    <div class="cart-subtotal">
+      <span>{{ 'sections.cart.subtotal' | t }}</span>
+      <span data-cart-subtotal></span>
     </div>
-
-    <div class="cart-drawer__free-shipping" data-free-shipping></div>
-
-    <div class="cart-drawer__items" data-cart-items></div>
-
-    <div class="cart-drawer__footer">
-      <div class="cart-drawer__subtotal">
-        <span>{{ 'cart.drawer.subtotal' | t }}</span>
-        <strong data-cart-subtotal>{{ cart.total_price | money }}</strong>
-      </div>
-      <a href="/cart" class="button button--primary button--full">{{ 'cart.drawer.view_cart' | t }}</a>
-      <a href="/checkout" class="button button--gold button--full">{{ 'cart.drawer.checkout' | t }}</a>
-    </div>
-  </aside>
+    <p class="shipping-note">{{ 'sections.cart.shipping_note' | t }}</p>
+    <a href="/checkout" class="cart-checkout-btn">{{ 'sections.cart.checkout' | t }}</a>
+    <a href="/collections/all" class="cart-continue">{{ 'sections.cart.continue_shopping' | t }}</a>
+  </div>
 </div>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": []
+}
+{% endschema %}

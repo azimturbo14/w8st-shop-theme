@@ -1,6 +1,9 @@
 {
   "sections": {
-    "main": { "type": "cart-template", "settings": {} }
+    "main": {
+      "type": "cart-template",
+      "settings": {}
+    }
   },
   "order": ["main"]
 }

@@ -1,32 +1,18 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code | default: 'en' }}">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="{{ settings.color_background }}">
-  <title>{{ page_title }}{% if current_tags %} &ndash; Tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}</title>
-  {% if page_description %}
-    <meta name="description" content="{{ page_description | escape }}">
-  {% endif %}
+  <title>{{ page_title }} - {{ shop.name }}</title>
   {{ content_for_header }}
   {{ 'theme.css' | asset_url | stylesheet_tag }}
-  {{ 'theme.js' | asset_url | script_tag }}
 </head>
-
-<body class="template-{{ template.name }}">
-  <a class="skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
-
+<body>
   {% render 'header' %}
-
-  <main id="MainContent" class="main-content" tabindex="-1">
+  <main id="main">
     {{ content_for_layout }}
   </main>
-
-  {% render 'footer' %}
-
   {% render 'cart-drawer' %}
-  {% render 'size-guide-modal' %}
-  <script>window.shopMoneyFormat = {{ shop.money_format | json }};</script>
+  {{ 'theme.js' | asset_url | script_tag }}
 </body>
 </html>

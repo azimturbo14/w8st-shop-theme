@@ -2,9 +2,7 @@
   "sections": {
     "main": {
       "type": "404",
-      "settings": {
-        "eyebrow": "W8st Shop"
-      }
+      "settings": {}
     }
   },
   "order": ["main"]

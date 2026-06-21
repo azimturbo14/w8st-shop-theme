@@ -1,13 +1,137 @@
-<div class="modal size-guide-modal" id="SizeGuideModal" aria-hidden="true">
-  <div class="modal__backdrop" data-close-modal></div>
-  <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="SizeGuideTitle">
-    <button class="icon-button modal__close" type="button" data-close-modal aria-label="{{ 'general.accessibility.close' | t }}">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-    </button>
-    <p class="eyebrow">{{ settings.location }}</p>
-    <h2 id="SizeGuideTitle">{{ settings.size_guide_title }}</h2>
-    <div class="size-guide-modal__body">
-      {{ settings.size_guide_body | newline_to_br }}
-    </div>
+<div class="size-guide-modal" id="size-guide-modal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Close">✕</button>
+    <h3>{{ 'products.product.size_guide' | t }}</h3>
+    <table class="size-chart">
+      <thead>
+        <tr>
+          <th>{{ 'products.product.size' | t }}</th>
+          <th>{{ 'products.product.chest' | t }}</th>
+          <th>{{ 'products.product.waist' | t }}</th>
+          <th>{{ 'products.product.hips' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>S</td>
+          <td>86-91 cm</td>
+          <td>71-76 cm</td>
+          <td>86-91 cm</td>
+        </tr>
+        <tr>
+          <td>M</td>
+          <td>94-99 cm</td>
+          <td>79-84 cm</td>
+          <td>94-99 cm</td>
+        </tr>
+        <tr>
+          <td>L</td>
+          <td>102-107 cm</td>
+          <td>87-92 cm</td>
+          <td>102-107 cm</td>
+        </tr>
+        <tr>
+          <td>XL</td>
+          <td>110-115 cm</td>
+          <td>95-100 cm</td>
+          <td>110-115 cm</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
+
+<style>
+.size-guide-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+}
+
+.size-guide-modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+  position: relative;
+  background: #2a1e0e;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #f5e6c8;
+  font-size: 1.5rem;
+}
+
+.size-chart {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.size-chart th,
+.size-chart td {
+  padding: 0.75rem;
+  text-align: center;
+  border-bottom: 1px solid #3a2e1a;
+  color: #f5e6c8;
+}
+
+.size-chart th {
+  color: #e8b84b;
+  font-weight: 600;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sizeGuideBtn = document.querySelector('[data-open-size-guide]');
+  const modal = document.getElementById('size-guide-modal');
+  const closeBtn = modal?.querySelector('.modal-close');
+  const overlay = modal?.querySelector('.modal-overlay');
+  
+  if (sizeGuideBtn && modal) {
+    sizeGuideBtn.addEventListener('click', function() {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
+    
+    if (overlay) {
+      overlay.addEventListener('click', closeModal);
+    }
+  }
+  
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+</script>

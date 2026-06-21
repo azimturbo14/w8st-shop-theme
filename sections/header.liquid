@@ -1,70 +1,25 @@
-{%- liquid
-  assign logo_image = settings.logo
-  assign logo_alt = shop.name
--%}
-
-<header class="site-header" role="banner">
-  {% if settings.show_announcement %}
-    <div class="announcement-bar">
-      <div class="container announcement-bar__inner">
-        <span>{{ settings.announcement_text }}</span>
-      </div>
-    </div>
-  {% endif %}
-
-  <div class="container header-main">
-    <a class="site-logo" href="/" aria-label="{{ shop.name }}">
-      {% if logo_image != blank %}
-        {{ logo_image | image_url: width: 240 | image_tag: width: 120, height: 42, loading: 'eager', alt: logo_alt }}
-      {% else %}
-        <span class="logo-text">{{ shop.name }}</span>
-      {% endif %}
+<header class="header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      {{ 'logo.png' | asset_url | img_tag: shop.name }}
     </a>
-
-    <button class="menu-toggle" type="button" aria-controls="PrimaryNavigation" aria-expanded="false">
-      <span class="sr-only">{{ 'sections.header.menu' | t }}</span>
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav class="primary-nav" id="PrimaryNavigation" aria-label="{{ 'sections.header.primary_navigation' | t }}">
-      <div class="primary-nav__backdrop" data-close-menu aria-hidden="true"></div>
-      <button class="primary-nav__close" type="button" data-close-menu aria-label="{{ 'general.accessibility.close' | t }}">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-      </button>
-      <ul>
-        {% if section.settings.menu != blank %}
-          {% for link in linklists[section.settings.menu].links %}
-            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-          {% endfor %}
-        {% else %}
-          <li><a href="/collections/new-arrivals">New</a></li>
-          <li><a href="/collections/clothing">Clothes</a></li>
-          <li><a href="/collections/sportswear">Sport</a></li>
-          <li><a href="/collections/sale">Sale</a></li>
-          <li><a href="/pages/about">About</a></li>
-          <li><a href="/pages/contact">Contact</a></li>
-        {% endif %}
-      </ul>
+    <button class="hamburger" id="hamburger">☰</button>
+    <nav class="nav" id="nav">
+      <a href="/collections/new-arrivals">{{ 'sections.header.new' | t }}</a>
+      <a href="/collections/clothing">{{ 'sections.header.clothes' | t }}</a>
+      <a href="/collections/sportswear">{{ 'sections.header.sport' | t }}</a>
+      <a href="/collections/sale">{{ 'sections.header.sale' | t }}</a>
+      <a href="/pages/about">{{ 'sections.header.about' | t }}</a>
+      <a href="/pages/contact">{{ 'sections.header.contact' | t }}</a>
     </nav>
-
     <div class="header-actions">
-      <form class="header-search" action="/search" method="get" role="search">
-        <label class="sr-only" for="HeaderSearch">{{ 'sections.header.search' | t }}</label>
-        <input id="HeaderSearch" name="q" type="search" placeholder="{{ 'sections.header.search_placeholder' | t }}" autocomplete="off">
-        <button type="submit" aria-label="{{ 'sections.header.search' | t }}">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </button>
-      </form>
-
-      {% render 'language-switcher' %}
-
-      <a class="icon-link" href="/wishlist" aria-label="{{ 'sections.header.wishlist' | t }}">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-      </a>
-
-      <button class="icon-link cart-icon" type="button" data-open-cart aria-label="{{ 'sections.header.cart' | t }}">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h15l-1.6 8.2a2 2 0 0 1-2 1.6H8.4a2 2 0 0 1-2-1.6L5 3H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="21" r="1.2" fill="currentColor"/><circle cx="18" cy="21" r="1.2" fill="currentColor"/></svg>
-        <span class="cart-count" data-cart-count>{{ cart.item_count }}</span>
+      <div class="lang">
+        <a href="?locale=en">EN</a> /
+        <a href="?locale=uz">UZ</a> /
+        <a href="?locale=ru">RU</a>
+      </div>
+      <button class="cart-btn" data-open-cart>
+        {{ 'sections.header.cart' | t }} (<span data-cart-count>{{ cart.item_count }}</span>)
       </button>
     </div>
   </div>
@@ -73,11 +28,6 @@
 {% schema %}
 {
   "name": "Header",
-  "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo" },
-    { "type": "checkbox", "id": "show_announcement", "label": "Show announcement", "default": true },
-    { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Free delivery across Tashkent over 500 000 UZS" },
-    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
-  ]
+  "settings": []
 }
 {% endschema %}
