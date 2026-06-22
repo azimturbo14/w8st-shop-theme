@@ -12,6 +12,7 @@
   <main id="main">
     {{ content_for_layout }}
   </main>
+  {% render 'footer' %}
   {% render 'cart-drawer' %}
   {{ 'theme.js' | asset_url | script_tag }}
 </body>
