@@ -1,3 +1,67 @@
+{% stylesheet %}
+.product-page {
+  padding: 60px 20px;
+  background-color: #1a1208;
+  min-height: calc(100vh - 200px);
+}
+
+.product-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+.product-main-image {
+  width: 100%;
+  height: auto;
+}
+
+.product-title {
+  font-size: 36px;
+  color: #f5e6c8;
+  margin: 0 0 20px;
+}
+
+.product-price {
+  margin-bottom: 30px;
+}
+
+.price-current {
+  font-size: 28px;
+  color: #e8b84b;
+  font-weight: 700;
+}
+
+.price-compare {
+  text-decoration: line-through;
+  color: #b8a882;
+  margin-right: 15px;
+}
+
+.product-description {
+  color: #b8a882;
+  margin-bottom: 30px;
+  line-height: 1.8;
+}
+
+#ProductSelect {
+  padding: 12px;
+  margin-bottom: 20px;
+  width: 100%;
+  background-color: #2a1e10;
+  color: #f5e6c8;
+  border: 1px solid #3a2a15;
+}
+
+@media (max-width: 768px) {
+  .product-container {
+    grid-template-columns: 1fr;
+  }
+}
+{% endstylesheet %}
+
 <div class="product-page">
   <div class="product-container">
     <div class="product-media">
@@ -36,3 +100,15 @@
     </div>
   </div>
 </div>
+
+{% schema %}
+{
+  "name": "Product Template",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product"
+    }
+  ]
+}
+{% endschema %}
