@@ -1,0 +1,42 @@
+<section class="contact-section">
+  <div class="contact-container">
+    <div class="contact-info">
+      <p class="contact-eyebrow">{{ section.settings.eyebrow | default: 'Talk to us' }}</p>
+      <h1 class="contact-title">{{ section.settings.title | default: 'Contact W8st Shop' }}</h1>
+      <p class="contact-description">{{ section.settings.description | default: 'Questions about sizing, delivery, returns, or custom orders? Send us a message.' }}</p>
+      <div class="contact-details">
+        <p><strong>Location:</strong> Tashkent, Uzbekistan</p>
+        <p><strong>Email:</strong> {{ shop.email }}</p>
+        <p><strong>Hours:</strong> 10:00–20:00 Tashkent time</p>
+      </div>
+    </div>
+
+    <form class="contact-form" action="/contact#contact-form" method="post">
+      <label for="ContactName">Name</label>
+      <input id="ContactName" name="contact[name]" type="text" autocomplete="name" required>
+
+      <label for="ContactEmail">Email</label>
+      <input id="ContactEmail" name="contact[email]" type="email" autocomplete="email" required>
+
+      <label for="ContactPhone">Phone</label>
+      <input id="ContactPhone" name="contact[phone]" type="tel" autocomplete="tel">
+
+      <label for="ContactMessage">Message</label>
+      <textarea id="ContactMessage" name="contact[body]" rows="6" required></textarea>
+
+      <button class="btn btn-gold btn-full-width" type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Talk to us" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Contact W8st Shop" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Questions about sizing, delivery, returns, or custom orders? Send us a message." }
+  ],
+  "presets": [{ "name": "Contact form" }]
+}
+{% endschema %}
