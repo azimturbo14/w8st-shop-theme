@@ -1,0 +1,99 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "W8st Shop",
+    "theme_version": "1.0.0",
+    "theme_author": "W8st Shop",
+    "theme_documentation_url": "https://w8stshop.com"
+  },
+  {
+    "name": "colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#1a1208",
+        "info": "Dark brown background"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "Accent Color",
+        "default": "#e8b84b",
+        "info": "Burnt orange/gold accent"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#f5e6c8",
+        "info": "Cream text color"
+      },
+      {
+        "type": "color",
+        "id": "surface_color",
+        "label": "Surface Color",
+        "default": "#f5f0e8",
+        "info": "Light cream surface"
+      }
+    ]
+  },
+  {
+    "name": "typography",
+    "settings": [
+      {
+        "type": "font",
+        "id": "heading_font",
+        "label": "Heading Font",
+        "default": "Helvetica Neue"
+      },
+      {
+        "type": "font",
+        "id": "body_font",
+        "label": "Body Font",
+        "default": "Helvetica Neue"
+      }
+    ]
+  },
+  {
+    "name": "social",
+    "settings": [
+      {
+        "type": "text",
+        "id": "instagram_url",
+        "label": "Instagram URL",
+        "default": "https://instagram.com/w8stshop"
+      },
+      {
+        "type": "text",
+        "id": "telegram_url",
+        "label": "Telegram URL",
+        "default": "https://t.me/w8stshop"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_social_links",
+        "label": "Show Social Links",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_free_shipping_threshold",
+        "label": "Show Free Shipping Threshold",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_amount",
+        "label": "Free Shipping Amount (UZS)",
+        "default": "500000"
+      }
+    ]
+  }
+]

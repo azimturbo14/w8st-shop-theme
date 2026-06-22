@@ -1,0 +1,90 @@
+{
+  "sections": {
+    "header": {
+      "new": "New",
+      "clothes": "Clothes",
+      "sport": "Sport",
+      "sale": "Sale",
+      "search": "Search",
+      "wishlist": "Wishlist",
+      "cart": "Cart"
+    },
+    "hero_banner": {
+      "title": "Wear the streets. Own the game.",
+      "subtitle": "Premium streetwear and sportswear from Tashkent, Uzbekistan",
+      "shop_now": "Shop Now",
+      "view_lookbook": "View Lookbook"
+    },
+    "ticker": {
+      "text": "Free shipping over 500,000 UZS · New drops every week · Streetwear & Sportswear · W8st Shop Toshkent"
+    },
+    "category_grid": {
+      "streetwear": "Streetwear",
+      "sportswear": "Sportswear",
+      "accessories": "Accessories"
+    },
+    "featured_products": {
+      "title": "New Arrivals"
+    },
+    "sport_collection": {
+      "title": "Sport Collection"
+    },
+    "promo_banner": {
+      "title": "Summer Sale",
+      "text": "Limited time only. Get up to 40% off on selected items.",
+      "badge": "40% OFF",
+      "shop_sale": "Shop Sale"
+    },
+    "footer": {
+      "tagline": "Wear the streets. Own the game.",
+      "location": "Toshkent, Uzbekistan",
+      "about_title": "About",
+      "about": "About Us",
+      "contact": "Contact",
+      "support_title": "Support",
+      "shipping": "Shipping Info",
+      "returns": "Returns",
+      "connect_title": "Connect",
+      "copyright": "All rights reserved."
+    },
+    "trust": {
+      "free_shipping": "Free Shipping",
+      "free_shipping_desc": "On orders over $50",
+      "easy_returns": "Easy Returns",
+      "easy_returns_desc": "30-day return policy",
+      "quality": "Premium Quality",
+      "quality_desc": "Crafted with care"
+    },
+    "product_card": {
+      "add_to_cart": "Add to Cart",
+      "no_image": "No Image Available"
+    },
+    "cart": {
+      "total": "Total",
+      "update": "Update Cart",
+      "checkout": "Checkout",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue Shopping"
+    }
+  },
+  "general": {
+    "cart": {
+      "title": "Shopping Cart",
+      "empty": "Your cart is empty",
+      "subtotal": "Subtotal",
+      "shipping_note": "Shipping and taxes calculated at checkout",
+      "checkout": "Checkout",
+      "continue_shopping": "Continue Shopping",
+      "remove": "Remove"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content"
+  },
+  "products": {
+    "product": {
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable"
+    }
+  }
+}

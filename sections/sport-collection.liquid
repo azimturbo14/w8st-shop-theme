@@ -1,0 +1,81 @@
+{% stylesheet %}
+.sport-collection {
+  background-color: #1a1208;
+  padding: 60px 20px;
+  color: #f5e6c8;
+}
+
+.sport-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sport-title {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+.sport-products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+@media (max-width: 992px) {
+  .sport-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .sport-products-grid {
+    grid-template-columns: 1fr;
+  }
+}
+{% endstylesheet %}
+
+<div class="sport-collection">
+  <div class="sport-container">
+    <h2 class="sport-title">{{ section.settings.title | default: 'Sport Collection' }}</h2>
+    <div class="sport-products-grid">
+      {% assign collection = section.settings.collection | default: 'sportswear' %}
+      {% for product in collections[collection].products limit: section.settings.products_to_show %}
+        {% render 'product-card', product: product %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Sport Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Sport Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 12,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sport Collection"
+    }
+  ]
+}
+{% endschema %}

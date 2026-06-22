@@ -1,0 +1,15 @@
+{
+  "current": {
+    "background_color": "#1a1208",
+    "accent_color": "#e8b84b",
+    "text_color": "#f5e6c8",
+    "surface_color": "#f5f0e8",
+    "heading_font": "Helvetica Neue",
+    "body_font": "Helvetica Neue",
+    "instagram_url": "https://instagram.com/w8stshop",
+    "telegram_url": "https://t.me/w8stshop",
+    "show_social_links": true,
+    "show_free_shipping_threshold": true,
+    "free_shipping_amount": "500000"
+  }
+}

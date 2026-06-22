@@ -1,0 +1,46 @@
+<header class="site-header" role="banner">
+  <div class="header-container">
+    <div class="header-left">
+      <a href="/" class="site-logo">
+        <span class="logo-text">W8st Shop</span>
+      </a>
+    </div>
+
+    <nav class="header-nav" role="navigation">
+      <ul class="nav-list">
+        <li><a href="/collections/new-arrivals">{{ 'sections.header.new' | t }}</a></li>
+        <li><a href="/collections/clothes">{{ 'sections.header.clothes' | t }}</a></li>
+        <li><a href="/collections/sport">{{ 'sections.header.sport' | t }}</a></li>
+        <li><a href="/collections/sale">{{ 'sections.header.sale' | t }}</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-right">
+      {% render 'language-switcher' %}
+
+      <button class="icon-button search-toggle" aria-label="{{ 'sections.header.search' | t }}">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+
+      <button class="icon-button wishlist-toggle" aria-label="{{ 'sections.header.wishlist' | t }}" id="wishlist-toggle">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l7.78 7.78 7.78-7.78a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        <span class="wishlist-count" id="wishlist-count">0</span>
+      </button>
+
+      <button class="icon-button cart-toggle" aria-label="{{ 'sections.header.cart' | t }}" id="cart-toggle">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 1 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+{% render 'cart-drawer' %}

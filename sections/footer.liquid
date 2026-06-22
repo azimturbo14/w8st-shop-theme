@@ -1,0 +1,123 @@
+{% stylesheet %}
+.site-footer {
+  background-color: #1a1208;
+  color: #b8a882;
+  padding: 60px 20px 30px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-brand {
+  font-size: 28px;
+  font-weight: 700;
+  color: #e8b84b;
+  margin-bottom: 20px;
+}
+
+.footer-tagline {
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.footer-links h4 {
+  color: #f5e6c8;
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #b8a882;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #e8b84b;
+}
+
+.footer-bottom {
+  border-top: 1px solid #3a2a15;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+}
+{% endstylesheet %}
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-brand-wrapper">
+        <div class="footer-brand">W8st Shop</div>
+        <p class="footer-tagline">{{ 'sections.footer.tagline' | t }}</p>
+        <p>{{ 'sections.footer.location' | t }}</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>{{ 'sections.footer.about_title' | t }}</h4>
+        <ul>
+          <li><a href="/pages/about">{{ 'sections.footer.about' | t }}</a></li>
+          <li><a href="/pages/contact">{{ 'sections.footer.contact' | t }}</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>{{ 'sections.footer.support_title' | t }}</h4>
+        <ul>
+          <li><a href="/pages/shipping">{{ 'sections.footer.shipping' | t }}</a></li>
+          <li><a href="/pages/returns">{{ 'sections.footer.returns' | t }}</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>{{ 'sections.footer.connect_title' | t }}</h4>
+        <ul>
+          <li><a href="https://instagram.com/w8stshop" target="_blank">Instagram</a></li>
+          <li><a href="https://t.me/w8stshop" target="_blank">Telegram</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {{ 'now' | date: '%Y' }} W8st Shop. {{ 'sections.footer.copyright' | t }}</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Footer"
+    }
+  ]
+}
+{% endschema %}

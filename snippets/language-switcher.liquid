@@ -1,0 +1,32 @@
+{% stylesheet %}
+.language-switcher {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.language-switcher a {
+  color: #b8a882;
+  text-decoration: none;
+  font-size: 14px;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.language-switcher a.active {
+  color: #e8b84b;
+  font-weight: 600;
+}
+
+.language-switcher a:hover {
+  color: #e8b84b;
+}
+{% endstylesheet %}
+
+<div class="language-switcher">
+  {% for locale in shop.locales %}
+    <a href="{{ request.path }}?locale={{ locale.iso_code }}" class="{% if locale.iso_code == request.locale.iso_code %}active{% endif %}">
+      {{ locale.iso_code | upcase }}
+    </a>{% unless forloop.last %}<span style="color: #b8a882;">/</span>{% endunless %}
+  {% endfor %}
+</div>

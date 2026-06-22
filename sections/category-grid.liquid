@@ -1,0 +1,75 @@
+{% stylesheet %}
+.category-grid {
+  background-color: #1a1208;
+  padding: 60px 20px;
+}
+
+.category-grid-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.category-card {
+  background-color: #2a1e10;
+  border: 2px solid transparent;
+  padding: 40px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: #f5e6c8;
+}
+
+.category-card:hover {
+  border-color: #e8b84b;
+  transform: translateY(-5px);
+}
+
+.category-card h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .category-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+{% endstylesheet %}
+
+<div class="category-grid">
+  <div class="category-grid-container">
+    <a href="/collections/streetwear" class="category-card">
+      <h3>{{ 'sections.category_grid.streetwear' | t }}</h3>
+    </a>
+    <a href="/collections/sport" class="category-card">
+      <h3>{{ 'sections.category_grid.sportswear' | t }}</h3>
+    </a>
+    <a href="/collections/accessories" class="category-card">
+      <h3>{{ 'sections.category_grid.accessories' | t }}</h3>
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Category Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Shop by Category"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Grid"
+    }
+  ]
+}
+{% endschema %}

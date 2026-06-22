@@ -1,0 +1,38 @@
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-overlay" data-close-cart></div>
+  <div class="cart-drawer-content">
+    <div class="cart-drawer-header">
+      <h2>{{ 'general.cart.title' | t }}</h2>
+      <button class="cart-drawer-close" data-close-cart>&times;</button>
+    </div>
+    <div class="cart-drawer-items" id="cart-items">
+      {% if cart.item_count == 0 %}
+        <p class="cart-empty">{{ 'general.cart.empty' | t }}</p>
+      {% else %}
+        {% for item in cart.items %}
+          <div class="cart-item">
+            <img src="{{ item.image | img_url: 'small' }}" alt="{{ item.title }}">
+            <div class="cart-item-details">
+              <h3>{{ item.title }}</h3>
+              <p>{{ item.variant.title }}</p>
+              <p>{{ item.final_line_price | money }}</p>
+              <div class="cart-item-actions">
+                <input type="number" value="{{ item.quantity }}" min="1" data-item-id="{{ item.id }}">
+                <button data-remove-item="{{ item.id }}">{{ 'general.cart.remove' | t }}</button>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <div class="cart-drawer-footer">
+      <div class="cart-subtotal">
+        <span>{{ 'general.cart.subtotal' | t }}:</span>
+        <span>{{ cart.total_price | money }}</span>
+      </div>
+      <p class="shipping-note">{{ 'general.cart.shipping_note' | t }}</p>
+      <button class="btn btn-gold btn-full-width" {% if cart.item_count == 0 %}disabled{% endif %}>{{ 'general.cart.checkout' | t }}</button>
+      <a href="/collections/all" class="continue-shopping">{{ 'general.cart.continue_shopping' | t }}</a>
+    </div>
+  </div>
+</div>

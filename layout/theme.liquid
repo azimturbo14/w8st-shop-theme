@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ page_title }} - W8st Shop</title>
+  {{ content_for_header }}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+</head>
+<body class="theme-dark">
+  <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
+
+  {% section 'header' %}
+
+  <main id="MainContent" class="main-content">
+    {% if template == 'index' %}
+      {{ content_for_index }}
+    {% else %}
+      {{ content_for_layout }}
+    {% endif %}
+  </main>
+
+  {% section 'footer' %}
+
+  {{ content_for_footer }}
+  {{ 'theme.js' | asset_url | script_tag }}
+</body>
+</html>

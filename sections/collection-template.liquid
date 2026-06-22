@@ -1,0 +1,61 @@
+<div class="collection-page">
+  <div class="collection-header">
+    <h1 class="collection-title">{{ collection.title }}</h1>
+    {% if collection.description %}
+      <p class="collection-description">{{ collection.description }}</p>
+    {% endif %}
+  </div>
+
+  {% if collection.products.size > 0 %}
+    <div class="collection-products">
+      {% for product in collection.products %}
+        {% render 'product-card', product: product %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="collection-empty">{{ 'sections.featured_products.no_products' | t }}</p>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+.collection-page {
+  padding: 40px 20px;
+  background-color: #f5f0e8;
+  min-height: 60vh;
+}
+
+.collection-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.collection-title {
+  font-size: 36px;
+  color: #1a1208;
+  text-transform: uppercase;
+}
+
+.collection-description {
+  color: #b8a882;
+}
+
+.collection-products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 992px) {
+  .collection-products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .collection-products {
+    grid-template-columns: 1fr;
+  }
+}
+{% endstylesheet %}

@@ -1,0 +1,67 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "heading": "Wear the streets. Own the game.",
+        "subheading": "Premium streetwear from Tashkent",
+        "button_text": "Shop Now",
+        "button_link": "/collections/all"
+      }
+    },
+    "ticker": {
+      "type": "scrolling-ticker",
+      "settings": {}
+    },
+    "categories": {
+      "type": "category-grid",
+      "settings": {
+        "title": "Shop by Category"
+      }
+    },
+    "new-arrivals": {
+      "type": "featured-products",
+      "settings": {
+        "title": "New Arrivals",
+        "collection": "all",
+        "products_to_show": 4
+      }
+    },
+    "sport": {
+      "type": "sport-collection",
+      "settings": {
+        "title": "Sport Collection",
+        "collection": "sportswear",
+        "products_to_show": 4
+      }
+    },
+    "promo": {
+      "type": "promo-banner",
+      "settings": {
+        "heading": "Summer Sale",
+        "text": "Up to 50% off selected items",
+        "button_text": "Shop Sale",
+        "button_link": "/collections/sale",
+        "badge": "SALE"
+      }
+    },
+    "trust": {
+      "type": "trust-badges",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "ticker",
+    "categories",
+    "new-arrivals",
+    "sport",
+    "promo",
+    "trust",
+    "footer"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "sections": {
+    "header": {
+      "new": "Yangi",
+      "clothes": "Kiyimlar",
+      "sport": "Sport",
+      "sale": "Chegirma",
+      "search": "Qidirish",
+      "wishlist": "Sevimlilar",
+      "cart": "Savat"
+    },
+    "hero_banner": {
+      "title": "Kechalar kiying. O'yinni o'zlashtiring.",
+      "subtitle": "Toshkentdan premium kechamdu ruk va sport kiyimlari",
+      "shop_now": "Xarid qilish",
+      "view_lookbook": "Lookbook ko'rish"
+    },
+    "ticker": {
+      "text": "500,000 UZS dan ortiq bo'lsa yetkazib berish bepul · Har hafta yangi keladilar · Kechamdu ruk va sport kiyimlari · W8st Shop Toshkent"
+    },
+    "category_grid": {
+      "streetwear": "Kechamdu ruk",
+      "sportswear": "Sport kiyimlari",
+      "accessories": "Aksessuarlar"
+    },
+    "featured_products": {
+      "title": "Yangi kelganlar"
+    },
+    "sport_collection": {
+      "title": "Sport kolleksiyasi"
+    },
+    "promo_banner": {
+      "title": "Yozgi chegirma",
+      "text": "Cheklovli muddat. Tanlangan mahsulotlarda 40% gacha chegirma.",
+      "badge": "40% CHEGIRMALAR",
+      "shop_sale": "Chegirmali xarid"
+    },
+    "footer": {
+      "tagline": "Kechalar kiying. O'yinni o'zlashtiring.",
+      "location": "Toshkent, O'zbekiston",
+      "about_title": "Haqida",
+      "about": "Biz haqimizda",
+      "contact": "Aloqa",
+      "support_title": "Yordam",
+      "shipping": "Yetkazib berish",
+      "returns": "Qaytish",
+      "connect_title": "Bog'lanish",
+      "copyright": "Barcha huquqlar himoyalangan."
+    },
+    "product_card": {
+      "add_to_cart": "Savatga qo'shish",
+      "no_image": "Rasm mavjud emas"
+    },
+    "cart": {
+      "total": "Jami",
+      "update": "Savatni yangilash",
+      "checkout": "Kassaga o'tish",
+      "empty": "Savatingiz bo'sh",
+      "continue_shopping": "Xaridni davom ettirish"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Mazmuniga o'tish"
+  },
+  "products": {
+    "product": {
+      "sold_out": "Tugab bo'ldi",
+      "unavailable": "Mavjud emas"
+    }
+  }
+}

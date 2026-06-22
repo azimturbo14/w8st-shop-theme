@@ -1,0 +1,47 @@
+{% stylesheet %}
+.scrolling-ticker {
+  background-color: #e8b84b;
+  color: #1a1208;
+  padding: 12px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-content {
+  display: inline-block;
+  animation: scroll-left 20s linear infinite;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+{% endstylesheet %}
+
+<div class="scrolling-ticker">
+  <div class="ticker-content">
+    {{ 'sections.ticker.text' | t }} &nbsp;&nbsp;&nbsp;&nbsp; {{ 'sections.ticker.text' | t }} &nbsp;&nbsp;&nbsp;&nbsp; {{ 'sections.ticker.text' | t }} &nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Scrolling Ticker",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Ticker Text",
+      "default": "Free shipping on orders over $50"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling Ticker"
+    }
+  ]
+}
+{% endschema %}

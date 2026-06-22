@@ -1,0 +1,113 @@
+{% stylesheet %}
+.product-card {
+  background-color: #f5f0e8;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.product-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-info {
+  padding: 20px;
+}
+
+.product-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1208;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.product-title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-prices {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.price-current {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1208;
+}
+
+.price-original {
+  font-size: 16px;
+  color: #b8a882;
+  text-decoration: line-through;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  background-color: #e8b84b;
+  color: #1a1208;
+  border: none;
+  padding: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+}
+
+.product-card:hover .add-to-cart-btn {
+  opacity: 1;
+  bottom: 0;
+}
+{% endstylesheet %}
+
+<div class="product-card" data-product-id="{{ product.id }}">
+  <div class="product-image-wrapper">
+    <a href="{{ product.url }}">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}" class="product-image" loading="lazy">
+      {% else %}
+        <div class="product-image-placeholder">{{ 'sections.product_card.no_image' | t }}</div>
+      {% endif %}
+    </a>
+  </div>
+  <div class="product-info">
+    <h3 class="product-title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+    <div class="product-prices">
+      {% if product.compare_at_price > product.price %}
+        <span class="price-original">{{ product.compare_at_price | money }}</span>
+      {% endif %}
+      <span class="price-current">{{ product.price | money }}</span>
+    </div>
+    <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form">
+      <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+      <button type="submit" class="add-to-cart-btn">{{ 'sections.product_card.add_to_cart' | t }}</button>
+    </form>
+  </div>
+</div>
